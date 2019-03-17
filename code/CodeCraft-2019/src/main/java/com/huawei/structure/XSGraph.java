@@ -1,8 +1,5 @@
 package com.huawei.structure;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class XSGraph {

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="commons-logging-1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/code/CodeCraft-2019/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/CodeCraft-2019/lib/log4j-1.2.17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

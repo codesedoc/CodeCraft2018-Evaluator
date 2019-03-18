@@ -1,11 +1,12 @@
 package com.huawei.structure;
 
+
 import java.util.List;
 
 /**
  * 车辆类
  */
-public class Car {
+public class Car implements Comparable<Car>{
 
     /**
      * 车辆id
@@ -54,6 +55,8 @@ public class Car {
      * 下一个路口id
      */
     private int nextCrossId;
+
+
 
     public Car(int id,int startCrossId,int endCrossId,int maxSpeed,int planTime){
         this.id = id;
@@ -117,5 +120,18 @@ public class Car {
                 ", path=" + path +
                 ", nextCrossId=" + nextCrossId +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Car o) {
+        int time= this.planTime-o.getPlanTime();
+        if (time==0){
+            int speed=o.maxSpeed-this.maxSpeed;
+            if (speed==0)
+                return -1;
+
+            return speed;
+        }
+        return time;
     }
 }

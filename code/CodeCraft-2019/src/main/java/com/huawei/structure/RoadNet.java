@@ -2,139 +2,27 @@ package com.huawei.structure;
 
 import com.huawei.FileUtils;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class RoadNet {
-    private XSGraph graph=new XSGraph();
-
-    public  class Road{
-        /**
-         * 道路id
-         */
-        private int roadId;
-
-        /**
-         *车道数目
-         */
-        private int countOfLane;
-
-        /**
-         * 道路长度
-         */
-        private int length;
-
-        /**
-         * 起始点id
-         */
-        private int startCrossId;
-
-        /**
-         * 重点id
-         */
-        private int endCrossId;
-
-        /**
-         * 道路的详细信息,顺向
-         */
-        private int[][] data;
-
-        /**
-         * 道路的详细信息，逆向
-         */
-        private int[][] reverseData;
-
-        /**
-         * 是否逆向
-         */
-        private boolean isTwoWay;
-
-        /**
-         * 最高限速
-         */
-        private int maxSpeed;
-
-        public Road(int id,int lanNum,int length,int startId,int endId,int maxSpeed,boolean isDup){
-            this.roadId = id;
-            this.countOfLane = lanNum;
-            this.length = length;
-            this.data = new int[lanNum][length];
-            this.startCrossId = startId;
-            this.endCrossId = endId;
-            this.maxSpeed = maxSpeed;
-            this.isTwoWay = isDup;
-            if (isDup)
-                this.reverseData = new int[lanNum][length];
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getMaxSpeed() {
-            return maxSpeed;
-        }
-
-
-    }
-
-    /**
-     * 定义路口数据结构
-     */
-    public  class Cross{
-        /**
-         * 路口id
-         *
-         */
-        private int crossId;
-
-
-        /**
-         * 与之相连的路口，分为四个方向
-         */
-        private int upRoadId;
-        private int rightRoadId;
-        private int downRoadId;
-        private int leftRoadId;
-
-        public Cross(int id,int upRoadId,int rightRoadId,int downRoadId, int leftRoadId){
-            this.crossId=id;
-            this.upRoadId=upRoadId;
-            this.rightRoadId=rightRoadId;
-            this.downRoadId=downRoadId;
-            this.leftRoadId=leftRoadId;
-        }
-    }
-    private ArrayList<Road>roadList=new ArrayList<>();
+    private XSGraph<Cross,Road> graph=new XSGraph();
+    private ArrayList<Road> roadList=new ArrayList<>();
     private ArrayList<Cross>crossList=new ArrayList<>();
-    private HashMap<Integer,XSGraph.Arc> mapOfArc=new HashMap<>();
-    private HashMap<Integer,Road> mapOfRoad=new HashMap<>();
+    private HashMap<Integer,Cross> mapOfCross=new HashMap<>();
+//    private HashMap<Integer,Road> mapOfRoad=new HashMap<>();
+
     public RoadNet(String roadsFilepath, String crossesFilepath){
         this.getRoadsAndCrossesFromFile(roadsFilepath,crossesFilepath);
-        HashSet<XSGraph.Vertex> vertexs=new HashSet<>();
-        HashSet<XSGraph.Arc> arcs=new HashSet<>();
+        for (Road road:roadList) {
+            int startCrossId=road.getStartCrossId();
+            int endCrossId=road.getEndCrossId();
+            graph.addOneArcAndTwoVer(road,mapOfCross.get(startCrossId),mapOfCross.get(endCrossId),road.getLength());
 
-
-        for (int i=0;i<crossList.size();i++) {
-            Cross cross=crossList.get(i);
-            XSGraph.Vertex<Road> vertex=graph.new Vertex(cross,cross.crossId);
-            vertexs.add(vertex);
         }
-        graph.initVertexs(vertexs);
-
-        for (int i=0;i<roadList.size();i++) {
-            Road road=roadList.get(i);
-            if (road.isTwoWay) {
-                XSGraph.Arc<Road> arc = graph.new Arc(road, road.endCrossId, road.startCrossId);
-                arcs.add(arc);
-                mapOfArc.put(2*road.roadId+1,arc);
-            }
-            XSGraph.Arc<Road> arc=graph.new Arc(road,road.startCrossId,road.endCrossId);
-            arcs.add(arc);
-            mapOfArc.put(2*road.roadId,arc);
-        }
-        graph.initArcs(arcs);
     }
+
     private void getRoadsAndCrossesFromFile(String roadsFilepath,String crossesFilepath){
         List<String> rows = FileUtils.readFileIntoList(roadsFilepath);
         for (int i=0;i<rows.size();i++) {
@@ -143,16 +31,23 @@ public class RoadNet {
                 continue;
             row=row.substring(1,row.length()-1);
             String[]items= row.split(",\\s*");
-            Road road=new Road(Integer.parseInt(items[0]),
-                    Integer.parseInt(items[3]),
+            Road road=new Road(2*Integer.parseInt(items[0]),
                     Integer.parseInt(items[1]),
-                    Integer.parseInt(items[4]),
-                    Integer.parseInt(items[5]),
                     Integer.parseInt(items[2]),
-                    items[6].equals("1")?true:false);
+                    Integer.parseInt(items[3]),
+                    Integer.parseInt(items[4]),
+                    Integer.parseInt(items[5]));
             roadList.add(road);
-            //mapOfRoad.put(road.roadId,road);
 
+            if (items[6].equals("1")){
+                road=new Road(2*Integer.parseInt(items[0])+1,
+                        Integer.parseInt(items[1]),
+                        Integer.parseInt(items[2]),
+                        Integer.parseInt(items[3]),
+                        Integer.parseInt(items[5]),
+                        Integer.parseInt(items[4]));
+            }
+            roadList.add(road);
         }
         rows = FileUtils.readFileIntoList(crossesFilepath);
         for (int i=0 ,j=0;i<rows.size();i++) {
@@ -168,61 +63,75 @@ public class RoadNet {
                     Integer.parseInt(items[3]),
                     Integer.parseInt(items[4]));
             crossList.add(cross);
+            mapOfCross.put(cross.getCrossId(),cross);
         }
     }
 
-    private static RoadNet SingeleInstance=null;
+    private static com.huawei.structure.RoadNet SingeleInstance=null;
 
 
-    public static RoadNet getInstance(String roadFile,String crossFile){
+    public static com.huawei.structure.RoadNet getInstance(String roadFile, String crossFile){
         if (SingeleInstance==null)
-            SingeleInstance=new RoadNet(roadFile,crossFile);
+            SingeleInstance=new com.huawei.structure.RoadNet(roadFile,crossFile);
         return SingeleInstance;
 
     }
 
-    //private limitedMaxSpeed carsManager=CarsManager.getInstance();
-    private void  updataAllArcWeight(int limitedMaxSpeed){
-        Iterator<Integer> it = mapOfArc.keySet().iterator();
-        while (it.hasNext()){
-            Integer key = it.next();
-            XSGraph.Arc arc=mapOfArc.get(key);
-            Road road=((Road)arc.getArcInfo());
-            double weight= road.length*1.0/Integer.min(road.maxSpeed,limitedMaxSpeed);
-            arc.setArcWeight(weight);
+    private void  updataAllRoadWeight(int limitedMaxSpeed){
+        for (Road road:roadList) {
+            double weight=Math.ceil(road.getLength()*1.0/Integer.min(road.getMaxSpeed(),limitedMaxSpeed))  ;
+            graph.changeWeightOfArc(road,weight);
         }
     }
 
-    private void  updataStatusOfNew(int level){
-        updataAllArcWeight(level);
-        graph.creatVertsToVertsMinpath(level);
+    private void  addRoadNetWeight(int level){
+        updataAllRoadWeight(level);
+        graph.addNetWeight(level);
     }
 
-    public void createCrossesToCrosses(int speedLevels[]){
-        for (int i:speedLevels
-             ) {
-            updataStatusOfNew(i);
+    public void createAllNetWeight(int speedLevels[]){
+        for (int i:speedLevels) {
+            addRoadNetWeight(i);
         }
     }
 
-    public ArrayList<Integer> getPathByCrossId(int level,int oId,int dId){
+    public ArrayList<Cross> getCrossPath(int level,Cross origin,Cross destination){
+        ArrayList<Cross> result=graph.getVerPath(level,origin,destination);
+        return result;
+    }
+
+    public ArrayList<Road> getRoadPath(int level,Cross origin,Cross destination){
+        ArrayList<Road> result=graph.getArcPath(level,origin,destination);
+        return result;
+    }
+
+    public ArrayList<Integer> getUndirectedRoadIdPath(int level,Cross origin,Cross destination){
         ArrayList<Integer> result=new ArrayList<>();
-        ArrayList<Integer> temp=graph.getPathById(level,oId,dId);
-        if (temp==null)
-            return null;
-        for(int count=0;count<temp.size()-1;count++){
-            int startCrossId=temp.get(count);
-            int endCrossId=temp.get(count+1);
-            Road road=(Road)graph.getArcBySearchVerId(startCrossId,endCrossId).getArcInfo();
-            int roadId= (road).roadId;
-            result.add(roadId);
+        ArrayList<Road> temp=getRoadPath(level,origin,destination);
+        for (Road road:temp) {
+            result.add(road.getRoadId()/2);
         }
         return result;
     }
 
-    public double getPathWeightByCrossId(int level,int oId,int dId){
-        double result;
-        result=graph.getPathWeightById(level,oId,dId);
+    public ArrayList<Integer> getUndirectedRoadIdPath(int level,int originId,int  destinationId){
+        ArrayList<Integer> result;
+        Cross origin=mapOfCross.get(originId);
+        Cross destination=mapOfCross.get(destinationId);
+        result=getUndirectedRoadIdPath(level,origin,destination);
+        return result;
+    }
+
+
+    public double getPathWeight(int level,Cross origin,Cross destination){
+        double result=graph.getPathWeight(level,origin,destination);
+        return result;
+    }
+    public double getPathWeight(int level,int originId,int  destinationId){
+        Cross origin=mapOfCross.get(originId);
+        Cross destination=mapOfCross.get(destinationId);
+        double result=getPathWeight(level,origin,destination);
         return result;
     }
 }
+

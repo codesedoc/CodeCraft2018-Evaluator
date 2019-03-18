@@ -1,6 +1,7 @@
 package com.huawei.structure;
 
 import com.huawei.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ public class TrafficControlCenter {
     private String answerFile;
     private RoadNet roadNet;
     private CarsManager carsManager;
+    private static final Logger logger = Logger.getLogger(CarsManager.class);
     public TrafficControlCenter(String carFile,String roadFile,String crossFile,String answerFile){
         this.carFile=carFile;
         this.roadFile=roadFile;
@@ -32,20 +34,21 @@ public class TrafficControlCenter {
         while (it.hasNext()) {
             speedLevels[i++]=it.next();
         }
-        roadNet.createCrossesToCrosses(speedLevels);
-        List<Car> carList=carsManager.getCarList();
-        int count =carList.size();
+        roadNet.createAllNetWeight(speedLevels);
+        TreeSet<Car> carSet=carsManager.getCarSet();
+        int count =0;
         //StringBuilder stringBuilder=new StringBuilder("");
         ArrayList<String> anwserStrings=new ArrayList();
-        double startTime=0;
-        for(i=0;i<count;i++){
-            Car car=carList.get(i);
+        int startTime=0;
+        Iterator<Car> carIt=carSet.iterator();
+        while (carIt.hasNext()){
+            Car car=carIt.next();
             int startCrossId=car.getStartCrossId();
             int endCrossId=car.getEndCrossId();
             if (startTime<car.getPlanTime())
                 startTime=car.getPlanTime();
             String tempStr="("+car.getId()+","+(startTime);
-            ArrayList<Integer> path=roadNet.getPathByCrossId(car.getMaxSpeed(),startCrossId,endCrossId);
+            ArrayList<Integer> path=roadNet.getUndirectedRoadIdPath(car.getMaxSpeed(),startCrossId,endCrossId);
             for (Integer roadId:path
                  ) {
                 tempStr+=","+String.valueOf(roadId);
@@ -53,9 +56,11 @@ public class TrafficControlCenter {
             tempStr+=")";
             //anwserStrings.append(tempStr);
             anwserStrings.add(tempStr);
-            System.out.println(tempStr);
-            startTime+=Math.ceil(roadNet.getPathWeightByCrossId(car.getMaxSpeed(),startCrossId,endCrossId)) ;
+            logger.info(tempStr);
+            startTime+=Math.ceil(roadNet.getPathWeight(car.getMaxSpeed(),startCrossId,endCrossId)) ;
+            count++;
         }
+        logger.info("车辆路线总数："+count);
         //String answerString=stringBuilder.toString();
         FileUtils.writeFileFromList(anwserStrings,answerFile);
     }

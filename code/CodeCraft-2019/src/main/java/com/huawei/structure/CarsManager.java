@@ -1,20 +1,24 @@
 package com.huawei.structure;
 
-import java.util.*;
+import org.apache.log4j.Logger;
+
+import java.util.List;
+import java.util.TreeSet;
 
 public class CarsManager {
     private static CarsManager singleInstance=null;
 
-    public ArrayList<Car> getCarList() {
-        return carList;
+    public TreeSet<Car> getCarSet() {
+        return carSet;
     }
 
-    private ArrayList<Car> carList;
+    private TreeSet<Car> carSet;
 
     public int getCountOfCar() {
         return countOfCar;
     }
 
+    private static final Logger logger = Logger.getLogger(CarsManager.class);
     private int countOfCar;
     public TreeSet<Integer> getCarsMaxSpeedSet() {
         return carsMaxSpeedSet;
@@ -24,14 +28,14 @@ public class CarsManager {
     private TreeSet<Integer> carsMaxSpeedSet=new TreeSet<>();
 
     public CarsManager(String carFile){
-        carList = this.createCars(carFile);
+        carSet = this.createCars(carFile);
         singleInstance = this;
-        countOfCar=carList.size();
-        sortAllCars(1);
-//        for (Car car:carList
-//             ) {
-//            System.out.println(car);
-//        }
+        countOfCar=carSet.size();
+        //sortAllCars(1);
+        for (Car car:carSet
+        ) {
+            //logger.info(car.getId());
+        }
     }
     public static CarsManager getInstance(String carFile){
         if (singleInstance==null)
@@ -43,8 +47,8 @@ public class CarsManager {
      * @param carFile
      * @return
      */
-    private ArrayList<Car> createCars(String carFile){
-        ArrayList<Car> cars = new ArrayList<>();
+    private TreeSet<Car> createCars(String carFile){
+        TreeSet<Car> cars = new TreeSet();
         List<String> carList = com.huawei.FileUtils.readFileIntoList(carFile);
         carList.remove(0);
         for (String carStr:carList){
@@ -59,44 +63,4 @@ public class CarsManager {
         }
         return cars;
     }
-
-    public void sortAllCars(int timeScale){
-        Collections.sort(carList, new Comparator<Car>() {
-            @Override
-            public int compare(Car o1, Car o2) {
-                return o1.getPlanTime()/timeScale -o2.getPlanTime()/timeScale;
-            }
-        });
-        ArrayList<Car> sortCars=new ArrayList<>();
-        ArrayList<Car> carsTemp=new ArrayList<>();
-        for (int i=0;i<carList.size();i++){
-            carsTemp.add(carList.get(i));
-            if (i==carList.size()-1){
-                Collections.sort(carsTemp, new Comparator<Car>() {
-                    @Override
-                    public int compare(Car o1, Car o2) {
-                        return o2.getMaxSpeed() -o1.getMaxSpeed();
-                    }
-                });
-                sortCars.addAll(carsTemp);
-                carsTemp=new ArrayList<>();
-                break;
-            }
-            if(carList.get(i).getPlanTime()==carList.get(i+1).getPlanTime()){
-                continue;
-            }
-            Collections.sort(carsTemp, new Comparator<Car>() {
-                @Override
-                public int compare(Car o1, Car o2) {
-                    return o2.getMaxSpeed() -o1.getMaxSpeed();
-                }
-            });
-
-            sortCars.addAll(carsTemp);
-            carsTemp=new ArrayList<>();
-        }
-        carList=sortCars;
-
-    }
-
 }

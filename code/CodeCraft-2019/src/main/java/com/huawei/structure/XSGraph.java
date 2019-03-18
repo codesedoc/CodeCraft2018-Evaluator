@@ -1,178 +1,106 @@
 package com.huawei.structure;
 
+
 import java.util.*;
 
-public class XSGraph {
+public class XSGraph<VerInfo,ArcInfo>{
 
-    private double pathWeightMatrix[][];
-    private int pathMatrix[][];
     private HashMap<Integer,int[][]> allPathMatix=new HashMap<>();
     private HashMap<Integer,double[][]> allpathWeightMatrix=new HashMap<>();
+    private HashMap<Vertex,Integer>mapOfVerIndex=new HashMap<>();
+    private HashMap<Object,Vertex>mapOfVer=new HashMap<>();
+    private HashMap<Object,Arc>mapOfArc=new HashMap<>();
+    private HashMap<Object,Integer>mapOfVerInfoToIndex=new HashMap<>();
     private int  countOfVertex;
-    public int[][] getPathMatrix() {
-        int result[][]=new int[countOfVertex][countOfVertex];
-        for (int i=0;i< countOfVertex;i++){
-            for (int j=0;j< countOfVertex;j++){
-                if(pathMatrix[i][j]<0)
-                    result[i][j]=0;
-                else
-                    result[i][j]=vertexList.get(pathMatrix[i][j]).getVertexId();
-            }
-        }
-        return result;
-    }
 
+    private ArrayList<Vertex<VerInfo>> vertexList=new ArrayList<>();
 
-    private HashMap<Integer,Integer>mapOfVerIndex=new HashMap<>();
-    //private HashMap<Vertex,Integer>mapOf=new HashMap<>();
-
-    public class Vertex<VerInfo> {
-        private VerInfo vertexInfo;
-        private int vertexId;
-        private Arc firstNodeOfArcHead=null;
-        private Arc firstNodeOfArcTail=null;
-
-        public Vertex(VerInfo verInfo,int vertexId){
-            this.vertexInfo=verInfo;
-            this.vertexId=vertexId;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.vertexId;
-        }
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Vertex)){
-                return false;
-            }
-            Vertex v =(Vertex)obj;
-            return v.vertexId==this.vertexId;
-        }
-
-        public VerInfo getVertexInfo() {
-            return vertexInfo;
-        }
-
-        public void setVertexInfo(VerInfo vertexInfo) {
-            this.vertexInfo = vertexInfo;
-        }
-
-        public int getVertexId() {
-            return vertexId;
-        }
-    }
-
-    public class Arc<ArcInfo>{
-        private ArcInfo arcInfo;
-        private int arcHeadIndex;
-        private Arc nextArcOfArcHead;
-        private int arcTailIndex;
-        private Arc nextArcOfArcTail;
-        private double arcWeight;
-        public Arc(ArcInfo arcInfo,int arcTailId,int arcHeadId){
-            this.arcInfo=arcInfo;
-            this.arcHeadIndex=mapOfVerIndex.get(arcTailId);
-            this.arcTailIndex=mapOfVerIndex.get(arcHeadId);
-            //sthis.arcWeith=arcWeith;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.arcHeadIndex+this.arcTailIndex;
-        }
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Arc)){
-                return false;
-            }
-            Arc arc =(Arc)obj;
-            if (arc.arcTailIndex==this.arcTailIndex && arc.arcHeadIndex==this.arcHeadIndex) {
-                return true;
-            }
-            return false;
-        }
-
-        public ArcInfo getArcInfo() {
-            return arcInfo;
-        }
-
-        public void setArcInfo(ArcInfo arcInfo) {
-            this.arcInfo = arcInfo;
-        }
-
-        public double getArcWeight() {
-            return arcWeight;
-        }
-
-        public void setArcWeight(double arcWeith) {
-            this.arcWeight = arcWeith;
-        }
-    }
-
-
-    private ArrayList<Vertex> vertexList=new ArrayList();
-    private ArrayList<Arc> arcList=new ArrayList();
-
-    public void initVertexs(HashSet<Vertex>vertexs){
-        Iterator<Vertex> it = vertexs.iterator();
-        while (it.hasNext()){
-            Vertex ver = it.next();
-            vertexList.add(ver);
-        }
-        for (int i=0;i<vertexList.size();i++){
-            Vertex ver = vertexList.get(i);
-            mapOfVerIndex.put(ver.vertexId,i);
-        }
+    private void addVertex(VerInfo verInfo){
+        Vertex<VerInfo> ver=new Vertex(verInfo);
+        mapOfVer.put(verInfo,ver);
+        mapOfVerIndex.put(ver,countOfVertex);
+        mapOfVerInfoToIndex.put(verInfo,countOfVertex);
+        vertexList.add(ver);
         countOfVertex=vertexList.size();
+    }
+    private void addArc(ArcInfo arcInfo,Vertex arcTail,Vertex arcHead,double arcWeight){
+        int arcHeadIndex=mapOfVerIndex.get(arcHead);
+        int arcTailIndex=mapOfVerIndex.get(arcTail);
+        Arc<ArcInfo> arc=new Arc(arcInfo,arcTailIndex,arcHeadIndex,arcWeight);
 
+        arc.setNextArcOfArcHead(arcHead.getFirstNodeOfArcHead());
+        arcHead.setFirstNodeOfArcHead(arc);
+
+        arc.setNextArcOfArcTail(arcTail.getFirstNodeOfArcTail());
+        arcTail.setFirstNodeOfArcTail(arc);
+        mapOfArc.put(arcInfo,arc);
+    }
+    public void addOneArcAndTwoVer(ArcInfo arcInfo,VerInfo tailInfo,VerInfo headInfo,double arcWeight){
+        Vertex verTail;
+        Vertex verHead;
+        if (mapOfVer.get(tailInfo)==null) {
+            addVertex(tailInfo);
+        }
+        if (mapOfVer.get(headInfo)==null) {
+            addVertex(headInfo);
+        }
+        verTail=mapOfVer.get(tailInfo);
+        verHead=mapOfVer.get(headInfo);
+        addArc(arcInfo,verTail,verHead,arcWeight);
     }
 
-    public void initArcs(HashSet<Arc>arcs){
-        Iterator<Arc> it1 = arcs.iterator();
-        while (it1.hasNext()) {
-            Arc arc = it1.next();
-
-            Vertex arcHead=vertexList.get(arc.arcHeadIndex);
-            Vertex arcTail=vertexList.get(arc.arcTailIndex);
-
-            arc.nextArcOfArcHead =arcHead.firstNodeOfArcHead;
-            arcHead.firstNodeOfArcHead=arc;
-
-            arc.nextArcOfArcTail =arcTail.firstNodeOfArcTail;
-            arcTail.firstNodeOfArcTail=arc;
-
-            arcList.add(arc);
+    public void changeWeightOfArc(ArcInfo arcInfo,double weight){
+        Arc arc=mapOfArc.get(arcInfo);
+        if (arc!=null){
+            arc.setArcWeight(weight);
         }
     }
-    private Arc getArcBySearchAdjHead(int tailIndex,int adjHeadIndex){
-        Arc pArc= vertexList.get(tailIndex).firstNodeOfArcTail;
+
+    private void updateAllWeightOfArcs(HashMap<ArcInfo,Double> allWeight){
+        Iterator<ArcInfo> it=allWeight.keySet().iterator();
+        while (it.hasNext()){
+            ArcInfo arcInfo=it.next();
+            changeWeightOfArc(arcInfo,allWeight.get(arcInfo));
+        }
+    }
+
+    public void  addNetWeight(int level, HashMap<ArcInfo,Double> allWeight){
+        if (allPathMatix.get(level)==null){
+            updateAllWeightOfArcs(allWeight);
+            addPathMatrix(level);
+        }
+
+    }
+    public void  addNetWeight(int level){
+        if (allPathMatix.get(level)==null){
+            addPathMatrix(level);
+        }
+
+    }
+
+    private Arc<ArcInfo> getArcBySearchAdjHeadIndex(int tailIndex,int adjHeadIndex){
+        Arc pArc= vertexList.get(tailIndex).getFirstNodeOfArcTail();
         while(pArc!=null) {
-            if (pArc.arcHeadIndex==adjHeadIndex)
+            if (pArc.getArcHeadIndex()==adjHeadIndex)
                 return pArc;
-            pArc = pArc.nextArcOfArcTail;
+            pArc = pArc.getNextArcOfArcTail();
         }
         return null;
 
     }
-    public Arc getArcBySearchVerId(int tailID,int adjHeadId){
-        Arc pArc= getArcBySearchAdjHead(mapOfVerIndex.get(tailID),mapOfVerIndex.get(adjHeadId));
-        return pArc;
-
-    }
     private int firstAdjVex(int v){
-        Arc arc= vertexList.get(v).firstNodeOfArcTail;
+        Arc arc= vertexList.get(v).getFirstNodeOfArcTail();
         if (arc==null)
             return -1;
         else
-            return arc.arcHeadIndex;
+            return arc.getArcHeadIndex();
     }
     private int nextAdjVex(int tail,int pre){
-        Arc pArc= vertexList.get(tail).firstNodeOfArcTail;
+        Arc pArc= vertexList.get(tail).getFirstNodeOfArcTail();
        while(pArc!=null) {
-           if (pArc.arcHeadIndex==pre)
-               return pArc.nextArcOfArcTail.arcHeadIndex;
-           pArc = pArc.nextArcOfArcTail;
+           if (pArc.getArcHeadIndex()==pre)
+               return pArc.getNextArcOfArcTail().getArcHeadIndex();
+           pArc = pArc.getNextArcOfArcTail();
        }
        return -1;
 
@@ -202,7 +130,7 @@ public class XSGraph {
     }
 
     private void Dijkstra(int originalIndex ,double D[],int path[]){
-        Arc  pArc=vertexList.get(originalIndex).firstNodeOfArcTail;
+        Arc  pArc;
         int countOfVer=vertexList.size();
         byte finish[]=new byte[vertexList.size()];
         for (int i=0;i<countOfVer;i++) {
@@ -233,23 +161,23 @@ public class XSGraph {
             D[minIndex]=min;
 
             finish[minIndex]=1;
-            pArc =vertexList.get(minIndex).firstNodeOfArcTail;
+            pArc =vertexList.get(minIndex).getFirstNodeOfArcTail();
             while (pArc!=null){
-                if (finish[pArc.arcHeadIndex]==1) {
-                    pArc=pArc.nextArcOfArcTail;
+                if (finish[pArc.getArcHeadIndex()]==1) {
+                    pArc=pArc.getNextArcOfArcTail();
                     continue;
                 }
-                if (D[pArc.arcHeadIndex]>D[minIndex]+pArc.getArcWeight()){
-                    D[pArc.arcHeadIndex]=D[minIndex]+pArc.getArcWeight();
-                    path[pArc.arcHeadIndex]=minIndex;
+                if (D[pArc.getArcHeadIndex()]>D[minIndex]+pArc.getArcWeight()){
+                    D[pArc.getArcHeadIndex()]=D[minIndex]+pArc.getArcWeight();
+                    path[pArc.getArcHeadIndex()]=minIndex;
                 }
-                pArc=pArc.nextArcOfArcTail;
+                pArc=pArc.getNextArcOfArcTail();
             }
 
         }
     }
 
-    public void creatVertsToVertsMinpath(int level){
+    private void addPathMatrix(int level){
         int countOfVers=vertexList.size();
         int pathMatrix[][];
         double pathWeightMatrix[][];
@@ -264,8 +192,8 @@ public class XSGraph {
         allpathWeightMatrix.put(level,pathWeightMatrix);
     }
 
-    private ArrayList<Integer> getPathByIndex(int level,int oIndex,int dIndex){
-        ArrayList<Integer> result=new ArrayList<>();
+    private ArrayList<Vertex<VerInfo>> getPathByIndex(int level,int oIndex,int dIndex){
+        ArrayList<Vertex<VerInfo>> result=new ArrayList<>();
         if (oIndex<0 || oIndex>vertexList.size() || dIndex<0 || dIndex>vertexList.size())
             return null;
         int pMatrix[][]=allPathMatix.get(level);
@@ -274,22 +202,35 @@ public class XSGraph {
         while (pMatrix[oIndex][dIndex]!=-1){
             if (pMatrix[oIndex][dIndex]==Integer.MAX_VALUE)
                 return null;
-            result.add(dIndex);
+            result.add(vertexList.get(dIndex));
             dIndex=pMatrix[oIndex][dIndex];
         }
-        result.add(oIndex);
+        result.add(vertexList.get(oIndex));
 
         return result;
     }
 
-    public ArrayList<Integer> getPathById(int level,int oId,int dId){
-        ArrayList<Integer> result=new ArrayList<>();
-        ArrayList<Integer> temp=getPathByIndex(level,mapOfVerIndex.get(oId),mapOfVerIndex.get(dId));
+    public ArrayList<VerInfo> getVerPath(int level,VerInfo oId,VerInfo dId){
+        ArrayList<VerInfo> result=new ArrayList<>();
+        ArrayList<Vertex<VerInfo>> temp=getPathByIndex(level,mapOfVerInfoToIndex.get(oId),mapOfVerInfoToIndex.get(dId));
         if (temp==null)
             return null;
         int count=temp.size()-1;
         while(count>=0){
-            result.add(vertexList.get(temp.get(count--)).vertexId);
+            result.add(temp.get(count--).getVertexInfo());
+        }
+        return result;
+    }
+
+    public ArrayList<ArcInfo> getArcPath(int level,VerInfo oId,VerInfo dId){
+        ArrayList<ArcInfo> result=new ArrayList<>();
+
+        ArrayList<VerInfo> temp=getVerPath(level,oId,dId);
+        for(int count=0;count<temp.size()-1;count++){
+            int arcTailIndex=mapOfVerInfoToIndex.get(temp.get(count));
+            int arcHeadIndex=mapOfVerInfoToIndex.get(temp.get(count+1));
+            ArcInfo arc=getArcBySearchAdjHeadIndex(arcTailIndex,arcHeadIndex).getArcInfo();
+            result.add(arc);
         }
         return result;
     }
@@ -300,9 +241,9 @@ public class XSGraph {
         result=pwMatrix[oIndex][dIndex];
         return result;
     }
-    public double getPathWeightById(int level,int oId,int dId){
+    public double getPathWeight(int level,VerInfo oId,VerInfo dId){
         double result;
-        result=getPathWeightByIndex(level,mapOfVerIndex.get(oId),mapOfVerIndex.get(dId));
+        result=getPathWeightByIndex(level,mapOfVerInfoToIndex.get(oId),mapOfVerInfoToIndex.get(dId));
         return result;
     }
 }

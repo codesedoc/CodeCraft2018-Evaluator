@@ -2,11 +2,14 @@ package com.huawei.structure;
 
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
 public class CarsManager {
     private static CarsManager singleInstance=null;
+    private HashMap<Integer,Car> mapOfCar=new HashMap<>();
 
     public TreeSet<Car> getCarSet() {
         return carSet;
@@ -60,7 +63,19 @@ public class CarsManager {
                     Integer.parseInt(carItem[4]));
             cars.add(car);
             carsMaxSpeedSet.add(car.getMaxSpeed());
+            mapOfCar.put(car.getId(),car);
         }
         return cars;
+    }
+
+
+    public Car getCar(int carId){
+        return mapOfCar.get(carId);
+    }
+
+    public void addPathtoCar(int roadId,int carId){
+        Car car=mapOfCar.get(carId);
+        if (car!=null)
+            car.addSubPathIntodrivePath(roadId);
     }
 }

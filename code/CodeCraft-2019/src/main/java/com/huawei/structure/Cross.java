@@ -1,9 +1,11 @@
 package com.huawei.structure;
 
+import java.util.TreeSet;
+
 public /**
  * 定义路口数据结构
  */
-class Cross{
+class Cross implements Comparable<Cross> {
     /**
      * 路口id
      *
@@ -14,17 +16,24 @@ class Cross{
     /**
      * 与之相连的路口，分为四个方向
      */
-    private int upRoadId;
-    private int rightRoadId;
-    private int downRoadId;
-    private int leftRoadId;
+    private Road upRoad;
+    private Road rightRoad;
+    private Road downRoad;
+    private Road leftRoad;
 
-    public Cross(int id,int upRoadId,int rightRoadId,int downRoadId, int leftRoadId){
+    private TreeSet<Road> adjRoadSet=new TreeSet<>();
+    public Cross(int id,Road upRoad,Road rightRoad,Road downRoad, Road leftRoad){
         this.crossId=id;
-        this.upRoadId=upRoadId;
-        this.rightRoadId=rightRoadId;
-        this.downRoadId=downRoadId;
-        this.leftRoadId=leftRoadId;
+        this.upRoad=upRoad;
+        this.rightRoad=rightRoad;
+        this.downRoad=downRoad;
+        this.leftRoad=leftRoad;
+
+        adjRoadSet.add(upRoad);
+        adjRoadSet.add(rightRoad);
+        adjRoadSet.add(downRoad);
+        adjRoadSet.add(leftRoad);
+
     }
 
     public int getCrossId() {
@@ -35,35 +44,62 @@ class Cross{
         this.crossId = crossId;
     }
 
-    public int getUpRoadId() {
-        return upRoadId;
+    public TreeSet<Road> getAdjRoadSet() {
+        return adjRoadSet;
     }
 
-    public void setUpRoadId(int upRoadId) {
-        this.upRoadId = upRoadId;
+
+    public RoadDirectionEn getRelativeDir(Road road,Road nextRoad) {
+        if (road.equals(upRoad)){
+           if (nextRoad.equals(downRoad))
+               return RoadDirectionEn.STRAIGHT;
+           else if (nextRoad.equals(leftRoad))
+                return RoadDirectionEn.RIGHT;
+           else if (nextRoad.equals(rightRoad))
+               return RoadDirectionEn.LEFT;
+           else
+               return null;
+        }
+
+        if (road.equals(downRoad)){
+            if (nextRoad.equals(upRoad))
+                return RoadDirectionEn.STRAIGHT;
+            else if (nextRoad.equals(rightRoad))
+                return RoadDirectionEn.RIGHT;
+            else if (nextRoad.equals(leftRoad))
+                return RoadDirectionEn.LEFT;
+            else
+                return null;
+        }
+
+        if (road.equals(leftRoad)){
+            if (nextRoad.equals(upRoad))
+                return RoadDirectionEn.LEFT;
+            else if (nextRoad.equals(rightRoad))
+                return RoadDirectionEn.STRAIGHT;
+            else if (nextRoad.equals(downRoad))
+                return RoadDirectionEn.RIGHT;
+            else
+                return null;
+        }
+
+        if (road.equals(rightRoad)){
+            if (nextRoad.equals(upRoad))
+                return RoadDirectionEn.RIGHT;
+            else if (nextRoad.equals(leftRoad))
+                return RoadDirectionEn.STRAIGHT;
+            else if (nextRoad.equals(downRoad))
+                return RoadDirectionEn.LEFT;
+            else
+                return null;
+        }
+
+        return null;
     }
 
-    public int getRightRoadId() {
-        return rightRoadId;
-    }
-
-    public void setRightRoadId(int rightRoadId) {
-        this.rightRoadId = rightRoadId;
-    }
-
-    public int getDownRoadId() {
-        return downRoadId;
-    }
-
-    public void setDownRoadId(int downRoadId) {
-        this.downRoadId = downRoadId;
-    }
-
-    public int getLeftRoadId() {
-        return leftRoadId;
-    }
-
-    public void setLeftRoadId(int leftRoadId) {
-        this.leftRoadId = leftRoadId;
+    @Override
+    public int compareTo(Cross o) {
+        return this.crossId-o.crossId;
     }
 }
+

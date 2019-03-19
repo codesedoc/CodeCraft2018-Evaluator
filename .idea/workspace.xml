@@ -2,31 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ee8f6e9-0c4a-43b1-a671-0626432f1798" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Arc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Vertex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/NetLocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadDirectionEn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/config/answer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/bin/config/answer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Car.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Car.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/CarsManager$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/CarsManager$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/CarsManager$3.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/CarsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/CarsManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/RoadNet$Cross.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/RoadNet$Road.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Cross.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Cross.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Road.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/Road.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/RoadNet.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/RoadNet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/TrafficControlCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/TrafficControlCenter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/XSGraph$Arc.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/XSGraph$Vertex.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/XSGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/XSGraph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src.zip" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/out/production/SDK_java/com/huawei/structure/TrafficControlCenter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/TrafficControlCenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/TrafficControlCenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/XSGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/XSGraph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/CodeCraft-2019.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/CodeCraft-2019.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/CodeCraft-2019.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,12 +32,12 @@
     <favorites_list name="SDK_java" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+            <state relative-caret-position="550">
+              <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -54,16 +48,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+            <state relative-caret-position="1320">
+              <caret line="71" column="15" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#230#231#0" expanded="true" />
-                <element signature="e#259#260#0" expanded="true" />
-                <element signature="e#327#328#0" expanded="true" />
-                <element signature="e#360#361#0" expanded="true" />
-                <element signature="e#518#519#0" expanded="true" />
-                <element signature="e#556#557#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,34 +60,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/XSGraph.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logs/CodeCraft-2019.log">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Vertex.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="2640">
+              <caret line="159" column="16" selection-start-line="159" selection-start-column="16" selection-end-line="159" selection-end-column="16" />
               <folding>
-                <element signature="e#566#567#0" expanded="true" />
-                <element signature="e#626#627#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/NetLocation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="21" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="21" />
+              <folding>
+                <element signature="e#321#322#0" expanded="true" />
+                <element signature="e#348#349#0" expanded="true" />
+                <element signature="e#386#387#0" expanded="true" />
+                <element signature="e#418#419#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="82" column="6" selection-start-line="82" selection-start-column="6" selection-end-line="82" selection-end-column="6" />
+            <state relative-caret-position="3498">
+              <caret line="169" column="29" selection-start-line="169" selection-start-column="15" selection-end-line="169" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,30 +99,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="968">
-              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
-              <folding>
-                <element signature="e#571#572#0" expanded="true" />
-                <element signature="e#601#602#0" expanded="true" />
-                <element signature="e#644#645#0" expanded="true" />
-                <element signature="e#682#683#0" expanded="true" />
-                <element signature="e#714#715#0" expanded="true" />
-                <element signature="e#745#746#0" expanded="true" />
-                <element signature="e#790#791#0" expanded="true" />
-                <element signature="e#830#831#0" expanded="true" />
-                <element signature="e#865#866#0" expanded="true" />
-                <element signature="e#899#900#0" expanded="true" />
-                <element signature="e#950#951#0" expanded="true" />
-                <element signature="e#996#997#0" expanded="true" />
-                <element signature="e#1030#1031#0" expanded="true" />
-                <element signature="e#1063#1064#0" expanded="true" />
-                <element signature="e#1112#1113#0" expanded="true" />
-                <element signature="e#1156#1157#0" expanded="true" />
-                <element signature="e#1190#1191#0" expanded="true" />
-                <element signature="e#1223#1224#0" expanded="true" />
-                <element signature="e#1272#1273#0" expanded="true" />
-                <element signature="e#1316#1317#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="990">
+              <caret line="51" column="41" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadDirectionEn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="12" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -151,39 +117,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="62" column="15" selection-start-line="62" selection-start-column="15" selection-end-line="62" selection-end-column="15" />
+            <state relative-caret-position="88">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding>
-                <element signature="e#876#877#0" expanded="true" />
-                <element signature="e#905#906#0" expanded="true" />
-                <element signature="e#998#999#0" expanded="true" />
-                <element signature="e#1027#1028#0" expanded="true" />
-                <element signature="e#1068#1069#0" expanded="true" />
-                <element signature="e#1104#1105#0" expanded="true" />
-                <element signature="e#1139#1140#0" expanded="true" />
-                <element signature="e#1173#1174#0" expanded="true" />
-                <element signature="e#1224#1225#0" expanded="true" />
-                <element signature="e#1270#1271#0" expanded="true" />
-                <element signature="e#1311#1312#0" expanded="true" />
-                <element signature="e#1347#1348#0" expanded="true" />
-                <element signature="e#1383#1384#0" expanded="true" />
-                <element signature="e#1418#1419#0" expanded="true" />
-                <element signature="e#1471#1472#0" expanded="true" />
-                <element signature="e#1519#1520#0" expanded="true" />
-                <element signature="e#1553#1554#0" expanded="true" />
-                <element signature="e#1586#1587#0" expanded="true" />
-                <element signature="e#1635#1636#0" expanded="true" />
-                <element signature="e#1679#1680#0" expanded="true" />
-                <element signature="e#1715#1716#0" expanded="true" />
-                <element signature="e#1746#1747#0" expanded="true" />
-                <element signature="e#1795#1796#0" expanded="true" />
-                <element signature="e#1835#1836#0" expanded="true" />
-                <element signature="e#1868#1869#0" expanded="true" />
-                <element signature="e#1899#1900#0" expanded="true" />
-                <element signature="e#1944#1945#0" expanded="true" />
-                <element signature="e#1977#1978#0" expanded="true" />
-                <element signature="e#2022#2023#0" expanded="true" />
-                <element signature="e#2062#2063#0" expanded="true" />
+                <element signature="e#2503#2504#0" expanded="true" />
+                <element signature="e#2532#2533#0" expanded="true" />
+                <element signature="e#2564#2565#0" expanded="true" />
+                <element signature="e#2595#2596#0" expanded="true" />
+                <element signature="e#2625#2626#0" expanded="true" />
+                <element signature="e#2654#2655#0" expanded="true" />
+                <element signature="e#2695#2696#0" expanded="true" />
+                <element signature="e#2731#2732#0" expanded="true" />
+                <element signature="e#2766#2767#0" expanded="true" />
+                <element signature="e#2800#2801#0" expanded="true" />
+                <element signature="e#2851#2852#0" expanded="true" />
+                <element signature="e#2897#2898#0" expanded="true" />
+                <element signature="e#2938#2939#0" expanded="true" />
+                <element signature="e#2974#2975#0" expanded="true" />
+                <element signature="e#3010#3011#0" expanded="true" />
+                <element signature="e#3045#3046#0" expanded="true" />
+                <element signature="e#3098#3099#0" expanded="true" />
+                <element signature="e#3146#3147#0" expanded="true" />
+                <element signature="e#3180#3181#0" expanded="true" />
+                <element signature="e#3213#3214#0" expanded="true" />
+                <element signature="e#3262#3263#0" expanded="true" />
+                <element signature="e#3306#3307#0" expanded="true" />
+                <element signature="e#3351#3352#0" expanded="true" />
+                <element signature="e#3391#3392#0" expanded="true" />
+                <element signature="e#3441#3442#0" expanded="true" />
+                <element signature="e#3484#3485#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -192,11 +154,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/TrafficControlCenter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+            <state relative-caret-position="269">
+              <caret line="59" column="15" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -207,6 +178,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -220,9 +192,11 @@
       <find>20239</find>
       <find>10018</find>
       <find>new</find>
+      <find>lanOfroad</find>
     </findStrings>
     <replaceStrings>
       <replace>GArc</replace>
+      <replace>LanOfroad</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -231,12 +205,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GArc.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GVertex.java" />
-        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java" />
-        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java" />
-        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Vertex.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Arc.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/XSGraph.java" />
@@ -244,16 +214,22 @@
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/CarManager.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarManager.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarStatus.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadDirectionEn.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/NetLocation.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java" />
+        <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java" />
         <option value="$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/TrafficControlCenter.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="136" />
-    <option name="y" value="99" />
-    <option name="width" value="2241" />
-    <option name="height" value="1039" />
+    <option name="y" value="23" />
+    <option name="width" value="2048" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -261,8 +237,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -329,16 +303,30 @@
             <path>
               <item name="SDK_java" type="b2602c69:ProjectViewProjectNode" />
               <item name="SDK_java" type="462c0819:PsiDirectoryNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
+              <item name="CodeCraft-2019" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="huawei" type="462c0819:PsiDirectoryNode" />
+              <item name="structure" type="462c0819:PsiDirectoryNode" />
+              <item name="Road.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="SDK_java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SDK_java" type="462c0819:PsiDirectoryNode" />
               <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552921097045" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553011880785" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -391,35 +379,35 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="8" y="23" width="2241" height="1039" extended-state="0" />
+    <frame x="0" y="23" width="2048" height="1040" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" sideWeight="0.13153154" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.522293" visible="true" weight="0.21691678" />
-      <window_info id="Structure" order="1" sideWeight="0.477707" side_tool="true" weight="0.21691678" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.32900432" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5016216" visible="true" weight="0.22083749" />
+      <window_info id="Structure" order="1" sideWeight="0.49837837" side_tool="true" visible="true" weight="0.22083749" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" sideWeight="0.20216216" side_tool="true" weight="0.21884347" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31926408" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3189189" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.34844193" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32864866" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
   </component>
   <component name="editorHistoryManager">
@@ -437,20 +425,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GVertex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GArc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GVertex.java" />
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/GArc.java" />
     <entry file="file://$PROJECT_DIR$/bin/config/car.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -486,126 +462,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logs/CodeCraft-2019.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" lean-forward="true" selection-end-line="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#229#230#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#326#327#0" expanded="true" />
-            <element signature="e#359#360#0" expanded="true" />
-            <element signature="e#517#518#0" expanded="true" />
-            <element signature="e#555#556#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
-          <folding>
-            <element signature="e#571#572#0" expanded="true" />
-            <element signature="e#601#602#0" expanded="true" />
-            <element signature="e#644#645#0" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#714#715#0" expanded="true" />
-            <element signature="e#745#746#0" expanded="true" />
-            <element signature="e#790#791#0" expanded="true" />
-            <element signature="e#830#831#0" expanded="true" />
-            <element signature="e#865#866#0" expanded="true" />
-            <element signature="e#899#900#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#996#997#0" expanded="true" />
-            <element signature="e#1030#1031#0" expanded="true" />
-            <element signature="e#1063#1064#0" expanded="true" />
-            <element signature="e#1112#1113#0" expanded="true" />
-            <element signature="e#1156#1157#0" expanded="true" />
-            <element signature="e#1190#1191#0" expanded="true" />
-            <element signature="e#1223#1224#0" expanded="true" />
-            <element signature="e#1272#1273#0" expanded="true" />
-            <element signature="e#1316#1317#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="62" column="15" selection-start-line="62" selection-start-column="15" selection-end-line="62" selection-end-column="15" />
-          <folding>
-            <element signature="e#876#877#0" expanded="true" />
-            <element signature="e#905#906#0" expanded="true" />
-            <element signature="e#998#999#0" expanded="true" />
-            <element signature="e#1027#1028#0" expanded="true" />
-            <element signature="e#1068#1069#0" expanded="true" />
-            <element signature="e#1104#1105#0" expanded="true" />
-            <element signature="e#1139#1140#0" expanded="true" />
-            <element signature="e#1173#1174#0" expanded="true" />
-            <element signature="e#1224#1225#0" expanded="true" />
-            <element signature="e#1270#1271#0" expanded="true" />
-            <element signature="e#1311#1312#0" expanded="true" />
-            <element signature="e#1347#1348#0" expanded="true" />
-            <element signature="e#1383#1384#0" expanded="true" />
-            <element signature="e#1418#1419#0" expanded="true" />
-            <element signature="e#1471#1472#0" expanded="true" />
-            <element signature="e#1519#1520#0" expanded="true" />
-            <element signature="e#1553#1554#0" expanded="true" />
-            <element signature="e#1586#1587#0" expanded="true" />
-            <element signature="e#1635#1636#0" expanded="true" />
-            <element signature="e#1679#1680#0" expanded="true" />
-            <element signature="e#1715#1716#0" expanded="true" />
-            <element signature="e#1746#1747#0" expanded="true" />
-            <element signature="e#1795#1796#0" expanded="true" />
-            <element signature="e#1835#1836#0" expanded="true" />
-            <element signature="e#1868#1869#0" expanded="true" />
-            <element signature="e#1899#1900#0" expanded="true" />
-            <element signature="e#1944#1945#0" expanded="true" />
-            <element signature="e#1977#1978#0" expanded="true" />
-            <element signature="e#2022#2023#0" expanded="true" />
-            <element signature="e#2062#2063#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#230#231#0" expanded="true" />
-            <element signature="e#259#260#0" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#556#557#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarManager.java" />
     <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/XSGraph.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -613,13 +470,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java">
+    <entry file="file://$PROJECT_DIR$/logs/CodeCraft-2019.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="82" column="6" selection-start-line="82" selection-start-column="6" selection-end-line="82" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="554" column="13" selection-start-line="554" selection-start-column="13" selection-end-line="554" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -634,10 +491,119 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarsManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="71" column="15" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Car.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2640">
+          <caret line="159" column="16" selection-start-line="159" selection-start-column="16" selection-end-line="159" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/NetLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="21" />
+          <folding>
+            <element signature="e#321#322#0" expanded="true" />
+            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#386#387#0" expanded="true" />
+            <element signature="e#418#419#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadNet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3498">
+          <caret line="169" column="29" selection-start-line="169" selection-start-column="15" selection-end-line="169" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Cross.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="51" column="41" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/RoadDirectionEn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/Road.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="e#2503#2504#0" expanded="true" />
+            <element signature="e#2532#2533#0" expanded="true" />
+            <element signature="e#2564#2565#0" expanded="true" />
+            <element signature="e#2595#2596#0" expanded="true" />
+            <element signature="e#2625#2626#0" expanded="true" />
+            <element signature="e#2654#2655#0" expanded="true" />
+            <element signature="e#2695#2696#0" expanded="true" />
+            <element signature="e#2731#2732#0" expanded="true" />
+            <element signature="e#2766#2767#0" expanded="true" />
+            <element signature="e#2800#2801#0" expanded="true" />
+            <element signature="e#2851#2852#0" expanded="true" />
+            <element signature="e#2897#2898#0" expanded="true" />
+            <element signature="e#2938#2939#0" expanded="true" />
+            <element signature="e#2974#2975#0" expanded="true" />
+            <element signature="e#3010#3011#0" expanded="true" />
+            <element signature="e#3045#3046#0" expanded="true" />
+            <element signature="e#3098#3099#0" expanded="true" />
+            <element signature="e#3146#3147#0" expanded="true" />
+            <element signature="e#3180#3181#0" expanded="true" />
+            <element signature="e#3213#3214#0" expanded="true" />
+            <element signature="e#3262#3263#0" expanded="true" />
+            <element signature="e#3306#3307#0" expanded="true" />
+            <element signature="e#3351#3352#0" expanded="true" />
+            <element signature="e#3391#3392#0" expanded="true" />
+            <element signature="e#3441#3442#0" expanded="true" />
+            <element signature="e#3484#3485#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/CarStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/CodeCraft-2019/src/main/java/com/huawei/structure/TrafficControlCenter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+        <state relative-caret-position="269">
+          <caret line="59" column="15" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

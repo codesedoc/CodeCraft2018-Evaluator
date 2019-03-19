@@ -1,6 +1,7 @@
 package com.huawei.structure;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,12 @@ public class Car implements Comparable<Car>{
      */
     private int maxSpeed;
 
+    /**
+     * 当前最高速度
+     */
+    private int curMaxSpeed;
+
+
     public int getPlanTime() {
         return planTime;
     }
@@ -49,14 +56,28 @@ public class Car implements Comparable<Car>{
     /**
      * 路径id集合
      */
-    private List<Integer> path;
+    private List<Road> path;
+
 
     /**
-     * 下一个路口id
+     * 下一个road
      */
-    private int nextCrossId;
+    private Road nextRoad;
+    public Road getNextRoad() {
+        return nextRoad;
+    }
+
+    public void setNextRoadId(Road nextRoad) {
+        this.nextRoad = nextRoad;
+    }
 
 
+
+    private ArrayList<Integer> drivePath;
+
+    private NetLocation location;
+
+    private CarStatus carStatus;
 
     public Car(int id,int startCrossId,int endCrossId,int maxSpeed,int planTime){
         this.id = id;
@@ -64,6 +85,30 @@ public class Car implements Comparable<Car>{
         this.endCrossId = endCrossId;
         this.maxSpeed = maxSpeed;
         this.planTime = planTime;
+        drivePath=new ArrayList<>();
+        location=null;
+        carStatus=CarStatus.UNDEFINE;
+        curMaxSpeed=maxSpeed;
+    }
+
+    public void addSubPathIntodrivePath(int roadId){
+        drivePath.add(roadId);
+    }
+
+    public CarStatus getCarStatus() {
+        return carStatus;
+    }
+
+    public void setCarStatus(CarStatus carStatus) {
+        this.carStatus = carStatus;
+    }
+
+    public int getCurMaxSpeed() {
+        return curMaxSpeed;
+    }
+
+    public void setCurMaxSpeed(int curMaxSpeed) {
+        this.curMaxSpeed = curMaxSpeed;
     }
 
     public int getId() {
@@ -108,6 +153,14 @@ public class Car implements Comparable<Car>{
         this.startTime = startTime;
     }
 
+    public NetLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(NetLocation location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
         return "Car{" +
@@ -117,8 +170,8 @@ public class Car implements Comparable<Car>{
                 ", maxSpeed=" + maxSpeed +
                 ", startTime=" + startTime +
                 ", planTime=" + planTime +
-                ", path=" + path +
-                ", nextCrossId=" + nextCrossId +
+                ", path=" + drivePath +
+                ", nextCrossId=" + nextRoad.getRoadId() +
                 '}';
     }
 

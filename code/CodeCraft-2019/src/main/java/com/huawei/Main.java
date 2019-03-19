@@ -1,7 +1,9 @@
 package com.huawei;
 
+import com.huawei.structure.CarStatus;
 import com.huawei.structure.TrafficControlCenter;
 import org.apache.log4j.Logger;
+
 
 
 public class Main {
@@ -26,6 +28,11 @@ public class Main {
         trafficControlCenter.test();
         // TODO: calc
 
+        CarStatus status=CarStatus.WAIT;
+        if (status==CarStatus.WAIT)
+            logger.info("==相等");
+        if (status.equals(CarStatus.WAIT))
+            logger.info("equals相等");
         // TODO: write answer.txt
         logger.info("Start write output file");
 

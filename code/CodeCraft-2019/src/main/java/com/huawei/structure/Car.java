@@ -62,16 +62,29 @@ public class Car implements Comparable<Car>{
     /**
      * 下一个road
      */
-    private Road nextRoad;
+    private int  roadpathIndex;
+
+    public int getRunToNextRoadMaxLen() {
+        return runToNextRoadMaxLen;
+    }
+
+    public void setRunToNextRoadMaxLen(int runToNextRoadMaxLen) {
+        this.runToNextRoadMaxLen = runToNextRoadMaxLen;
+    }
+
+    private int runToNextRoadMaxLen;
+
     public Road getNextRoad() {
-        return nextRoad;
+        if (roadpathIndex+1<path.size())
+            return path.get(roadpathIndex+1);
+        return null;
     }
-
-    public void setNextRoadId(Road nextRoad) {
-        this.nextRoad = nextRoad;
+    public Road toNextRoad() {
+        roadpathIndex++;
+        if (roadpathIndex<path.size())
+            return path.get(roadpathIndex);
+        return null;
     }
-
-
 
     private ArrayList<Integer> drivePath;
 
@@ -89,6 +102,11 @@ public class Car implements Comparable<Car>{
         location=null;
         carStatus=CarStatus.UNDEFINE;
         curMaxSpeed=maxSpeed;
+    }
+
+    public void setPath(ArrayList<Road> path) {
+        this.path = path;
+        roadpathIndex=-1;
     }
 
     public void addSubPathIntodrivePath(int roadId){
@@ -171,19 +189,29 @@ public class Car implements Comparable<Car>{
                 ", startTime=" + startTime +
                 ", planTime=" + planTime +
                 ", path=" + drivePath +
-                ", nextCrossId=" + nextRoad.getRoadId() +
                 '}';
     }
 
     @Override
+//    public int compareTo(Car o) {
+//        int time= this.planTime-o.getPlanTime();
+//        if (time==0){
+//            int speed=o.maxSpeed-this.maxSpeed;
+//            if (speed==0)
+//                return -1;
+//
+//            return speed;
+//        }
+//        return time;
+//    }
     public int compareTo(Car o) {
-        int time= this.planTime-o.getPlanTime();
+        int time= this.startTime-o.getStartTime();
         if (time==0){
-            int speed=o.maxSpeed-this.maxSpeed;
-            if (speed==0)
+            int carId=o.id-this.id;
+            if (carId==0)
                 return -1;
 
-            return speed;
+            return carId;
         }
         return time;
     }

@@ -16,8 +16,18 @@ public class TrafficControlCenter {
     private String answerFile;
     private RoadNet roadNet;
     private CarsManager carsManager;
+
+    private ArrayList<Car>  carsInNet;
+    private ArrayList<Car>  carsNoStart;
+    private ArrayList<Car>  carsInNetPre;
+
+    private int  countOfCars;
+    private int  countOfNoStartCars;
+    private int  countOfArriveCars;
     private int  countOfCarInNet;
-    private static final Logger logger = Logger.getLogger(CarsManager.class);
+
+    private static final Logger logger = Logger.getLogger(TrafficControlCenter.class);
+
     public TrafficControlCenter(String carFile,String roadFile,String crossFile,String answerFile){
         this.carFile=carFile;
         this.roadFile=roadFile;
@@ -25,6 +35,71 @@ public class TrafficControlCenter {
         this.answerFile=answerFile;
         roadNet=RoadNet.getInstance(roadFile,crossFile);
         carsManager=CarsManager.getInstance(carFile);
+        //countOfCar=carsManager.getCountOfCar();
+    }
+
+    private int systemTime;
+    private void addCarIntoNet() {
+        if (carsNoStart.size()==0)
+            return;
+        Car car=this.carsNoStart.get(0);
+        if (car.getStartTime()>systemTime)
+            return;
+        int max=Math.min(car.getMaxSpeed(),car.getNextRoad().getMaxSpeed());
+        car.setRunToNextRoadMaxLen(max);
+        car.setCurMaxSpeed(max);
+        if (roadNet.addCarIntoNet(car)) {
+            car.toNextRoad();
+            car.setCarStatus(CarStatus.END);
+        }
+        else
+            return;
+        this.carsInNet.add(car);
+        this.carsNoStart.remove(0);
+
+        countOfNoStartCars--;
+        countOfCarInNet++;
+    }
+
+
+    private void removeCarFromNet(Car car) {
+        this.carsInNet.remove(car);
+        countOfCarInNet--;
+        countOfArriveCars++;
+    }
+
+    public void initCarsWithAnswer(){
+        TreeSet<Car> cars = new TreeSet();
+        List<String> carStrList = com.huawei.FileUtils.readFileIntoList(answerFile);
+        for (String carStr:carStrList){
+            if (carStr.startsWith("#"))
+                continue;
+            String[] carItems = carStr.substring(1,carStr.length()-1).split(",\\s*");
+
+            Car car=carsManager.mapOfCar.get(Integer.parseInt(carItems[0]));
+
+            car.setStartTime(Integer.parseInt(carItems[1]));
+            ArrayList<Integer> roadIdPath=new ArrayList<>();
+
+            for (int i=2;i<carItems.length;i++)
+                roadIdPath.add(Integer.parseInt(carItems[i]));
+
+            ArrayList<Road> roadPath=roadNet.getRoadPath(car,roadIdPath);
+            car.setPath(roadPath);
+            cars.add(car);
+        }
+
+        carsNoStart=new ArrayList<>();
+        carsInNet=new ArrayList<>();
+        Iterator<Car> it=cars.iterator();
+        while (it.hasNext()){
+            Car car=it.next();
+            carsNoStart.add(car);
+        }
+
+        countOfNoStartCars=carsNoStart.size();
+        countOfCarInNet=0;
+        countOfArriveCars=0;
     }
 
 //    private void driveNet{
@@ -35,30 +110,79 @@ public class TrafficControlCenter {
 //            }
 //        }
 //    }
+
+    public void driveAllCars(){
+        systemTime=0;
+        while (countOfCarInNet>0 || countOfNoStartCars>0) {
+            //recordScene();
+            if (!driveAllCarInNet()) {
+                //recoveryScene();
+                //changePathOfCars();
+                logger.error("死锁");
+                return;
+            }
+            systemTime++;
+        }
+        logger.error("系统调度时间："+systemTime);
+        //outPut();
+    }
+
     private int countOfWaitCars=0;
-    private boolean driveAllendStateCarInNet(){
+    private ArrayList<Car> allfirstWaiteCars;
+
+    private boolean driveAllCarInNet(){
+        if (countOfCarInNet==0) {
+            addCarIntoNet();
+            return true;
+        }
         Iterator<Road> itRoad=roadNet.getRoadSet().iterator();
+        countOfWaitCars=0;
         while(itRoad.hasNext()){
             Road road= itRoad.next();
             if (!tagCarsStatus(road))
                 return false;
         }
-
         Iterator<Cross> itCross=roadNet.getCrossSet().iterator();
-        while(itCross.hasNext()){
-            Cross cross= itCross.next();
-            Iterator<Road> it=cross.getAdjRoadSet().iterator();
-            while(it.hasNext()){
-                Road roadInCross = it.next();
-                Car firstCar =roadNet.getFistWaitCar();
-                if (firstCar)
+        while (countOfWaitCars>0){
+            int preCount=countOfWaitCars;
+            while (itCross.hasNext()) {
+                Cross cross = itCross.next();
+                cross.createFirstcars();
+
+                Iterator<Road> it;
+                it = cross.getAdjRoadInSet().iterator();
+                while (it.hasNext()) {
+                    Road roadInCross = it.next();
+                    Car firstCar = roadInCross.getFistWaitCar();
+                    if (firstCar != null) {
+                        if (cross.isConflict(firstCar))
+                            continue;
+                        if (roadNet.moveCar(firstCar.getLocation(), cross, firstCar)) {
+                            cross.addFirstcar(roadInCross);
+                            countOfWaitCars--;
+                            if (firstCar.getNextRoad()==null)
+                                removeCarFromNet(firstCar);
+                            else
+                                firstCar.setCurMaxSpeed(Math.min(firstCar.getLocation().getRoad().getMaxSpeed(),firstCar.getMaxSpeed()));
+                            firstCar.setCarStatus(CarStatus.END);
+                        }
+                    }
+                }
+            }
+            if (preCount==countOfWaitCars){
+                allfirstWaiteCars.clear();
+                allfirstWaiteCars.addAll(roadNet.getAllFirstWaitCars());
+                return false;
             }
         }
+        addCarIntoNet();
         return true;
     }
 
-    private isConflict(Cross cross,Road road,Road)
+
     private boolean tagFirstCar(Car car ){
+        if (car.getId()==18585)
+            car=car;
         NetLocation location=car.getLocation();
         int intervel=roadNet.getIntervel(location);
         if (intervel>=car.getCurMaxSpeed()) {
@@ -66,13 +190,22 @@ public class TrafficControlCenter {
             return roadNet.moveCar(location,car,intervel);
         }
         else{
-            int maxSpeed= Math.min(car.getNextRoad().getMaxSpeed(),car.getMaxSpeed());
+            Road nextRoad= car.getNextRoad();
+            int maxSpeed;
+            if (nextRoad!=null)
+                maxSpeed= Math.min(car.getNextRoad().getMaxSpeed(),car.getMaxSpeed());
+            else{
+                car.setCarStatus(CarStatus.WAIT);
+                car.setRunToNextRoadMaxLen(0);
+                return true;
+            }
             if((maxSpeed-intervel)<=0){
                 car.setCarStatus(CarStatus.END);
                 return roadNet.moveCar(location,car,intervel);
             }
             else {
                 car.setCarStatus(CarStatus.WAIT);
+                car.setRunToNextRoadMaxLen(maxSpeed-intervel);
                 countOfWaitCars++;
             }
         }
@@ -91,7 +224,7 @@ public class TrafficControlCenter {
             if(carStatus==CarStatus.END){
                 return roadNet.moveCar(location,curCar,intervel);
             }
-            else if (carStatus==CarStatus.END){
+            else if (carStatus==CarStatus.WAIT){
                 countOfWaitCars++;
             }
             else
@@ -104,7 +237,11 @@ public class TrafficControlCenter {
         ArrayList<ArrayList<Car>> carsIdInRoad=roadNet.getAllCarsInRoad(road);
         for (ArrayList<Car> carsInLan:carsIdInRoad) {
             int countOfCars=carsInLan.size();
+            if (countOfCars==0)
+                continue;
             Car car=carsInLan.get(0);
+            if (car!=null)
+                car=car;
             if(!tagFirstCar(car))
                 return false;
             Car preCar=car;

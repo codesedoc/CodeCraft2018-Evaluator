@@ -1,10 +1,12 @@
 package com.huawei.structure;
 
 import com.huawei.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class RoadNet {
+    private static final Logger logger =Logger.getLogger(RoadNet.class);
     private XSGraph<Cross,Road> graph=new XSGraph();
     private TreeSet<Road> roadSet=new TreeSet<>();
     private TreeSet<Cross>crossSet=new TreeSet<>();
@@ -19,27 +21,38 @@ public class RoadNet {
         Iterator<Road> it=roadSet.iterator();
         while (it.hasNext()){
             Road road=it.next();
-            int startCrossId=road.getStartCrossId();
-            int endCrossId=road.getEndCrossId();
-            graph.addOneArcAndTwoVer(road,mapOfCross.get(startCrossId),mapOfCross.get(endCrossId),road.getLength());
+            graph.addOneArcAndTwoVer(road,road.getStartCross(),road.getEndCross(),road.getLength());
         }
         countOfCarInNet=0;
     }
 
     private void getRoadsAndCrossesFromFile(String roadsFilepath,String crossesFilepath){
-        List<String> rows = FileUtils.readFileIntoList(roadsFilepath);
+        List<String> rows;
+        rows= FileUtils.readFileIntoList(roadsFilepath);
         for (int i=0;i<rows.size();i++) {
             String row=rows.get(i);
             if (row.startsWith("#"))
                 continue;
             row=row.substring(1,row.length()-1);
             String[]items= row.split(",\\s*");
+
+            Cross cross1,cross2;
+            if ((cross1=mapOfCross.get(Integer.parseInt(items[4])))==null) {
+                cross1= new Cross(Integer.parseInt(items[4]));
+                mapOfCross.put(cross1.getCrossId(),cross1);
+                crossSet.add(cross1);
+            }
+            if ((cross2=mapOfCross.get(Integer.parseInt(items[5])))==null) {
+                cross2= new Cross(Integer.parseInt(items[5]));
+                mapOfCross.put(cross2.getCrossId(),cross2);
+                crossSet.add(cross2);
+            }
             Road road=new Road(2*Integer.parseInt(items[0]),
                     Integer.parseInt(items[1]),
                     Integer.parseInt(items[2]),
                     Integer.parseInt(items[3]),
-                    Integer.parseInt(items[4]),
-                    Integer.parseInt(items[5]));
+                    cross1,
+                    cross2);
             roadSet.add(road);
             mapOfRoad.put(road.getRoadId(),road);
             if (items[6].equals("1")){
@@ -47,8 +60,8 @@ public class RoadNet {
                         Integer.parseInt(items[1]),
                         Integer.parseInt(items[2]),
                         Integer.parseInt(items[3]),
-                        Integer.parseInt(items[5]),
-                        Integer.parseInt(items[4]));
+                        cross2,
+                        cross1);
             }
             roadSet.add(road);
             mapOfRoad.put(road.getRoadId(),road);
@@ -61,13 +74,41 @@ public class RoadNet {
             }
             row=row.substring(1,row.length()-1);
             String[]items= row.split(",\\s*");
-            Cross cross=new Cross(Integer.parseInt(items[0]),
-                    mapOfRoad.get(Integer.parseInt(items[1])),
-                    mapOfRoad.get(Integer.parseInt(items[2])),
-                    mapOfRoad.get(Integer.parseInt(items[3])),
-                    mapOfRoad.get(Integer.parseInt(items[4])));
-            crossSet.add(cross);
-            mapOfCross.put(cross.getCrossId(),cross);
+            int crossId= Integer.parseInt(items[0]);
+            Cross cross=mapOfCross.get(crossId);
+            int uniqueUpRoadId=Integer.parseInt(items[1]);
+            int uniqueRightRoadId=Integer.parseInt(items[2]);
+            int uniqueDownRoadId=Integer.parseInt(items[3]);
+            int uniqueLeftRoadId=Integer.parseInt(items[4]);
+
+            Road road;
+            if ((road=mapOfRoad.get(2*uniqueUpRoadId))!=null)
+                cross.setUpRoad(road);
+
+            if ((road=mapOfRoad.get(2*uniqueUpRoadId+1))!=null){
+                cross.setUpRoad(road);
+            }
+            if ((road=mapOfRoad.get(2*uniqueRightRoadId))!=null)
+                cross.setRightRoad(road);
+
+            if ((road=mapOfRoad.get(2*uniqueRightRoadId+1))!=null){
+                cross.setRightRoad(road);
+            }
+
+            if ((road=mapOfRoad.get(2*uniqueDownRoadId))!=null)
+                cross.setDownRoad(road);
+
+            if ((road=mapOfRoad.get(2*uniqueDownRoadId+1))!=null){
+                cross.setDownRoad(road);
+            }
+
+            if ((road=mapOfRoad.get(2*uniqueLeftRoadId))!=null)
+                cross.setLeftRoad(road);
+
+            if ((road=mapOfRoad.get(2*uniqueLeftRoadId+1))!=null){
+                cross.setLeftRoad(road);
+            }
+
         }
     }
 
@@ -155,9 +196,9 @@ public class RoadNet {
     public int getIntervel(NetLocation currentLoc) {
         return currentLoc.getRoad().getInterve(currentLoc.getLanOrderNum(),currentLoc.getLocInlan());
     }
-    public boolean removeCar(NetLocation location){
+    public boolean removeCar(NetLocation location,Car car){
 
-        return location.getRoad().removeCar(location);
+        return location.getRoad().removeCar(location,car);
     }
     public boolean addCar(NetLocation location,Car car){
         return location.getRoad().addCar(location,car);
@@ -167,8 +208,88 @@ public class RoadNet {
         return location.getRoad().moveCar(location,car,distance);
     }
 
-    public Car getFistWaitCar(Road road){
-        return road.getFistWaitCar();
+    private boolean removeCarFromCross(Cross cross ,Car car){
+        return cross.removeFirstcar(car);
+
     }
+
+    public boolean moveCar(NetLocation netLocation,Cross cross ,Car car){
+        if (car.getNextRoad()==null) {
+            netLocation.getRoad().removeCar(netLocation,car);
+            removeCarFromCross(cross,car);
+            return true;
+        }
+        NetLocation nextLoc=car.getNextRoad().getEmptyLoc(car.getRunToNextRoadMaxLen());
+        if (nextLoc==null) {
+            if (!car.getNextRoad().isAllEnd())
+                return false;
+            else {
+                removeCarFromCross(cross,car);
+                return netLocation.getRoad().moveCarToHead(netLocation,car);
+            }
+        }
+        if(netLocation.getRoad().removeCar(netLocation,car)) {
+            if (removeCarFromCross(cross, car))
+                if (nextLoc.getRoad().addCar(nextLoc, car)){
+                    car.toNextRoad();
+                    return true;
+                }
+        }
+        return false;
+    }
+
+
+    public ArrayList<Car> getAllFirstWaitCars() {
+        ArrayList<Car> result = new ArrayList<>();
+        Iterator<Road> it = roadSet.iterator();
+        while (it.hasNext()) {
+            Road roadInCross = it.next();
+            Car firstCar = roadInCross.getFistWaitCar();
+            if (firstCar != null) {
+                result.add(firstCar);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Road> getRoadPath(Car car, ArrayList<Integer> roadUnIdPath) {
+        ArrayList<Road> result = new ArrayList<>();
+        Cross  cross=mapOfCross.get(car.getStartCrossId());
+        for (int i=0;i<roadUnIdPath.size();i++) {
+            Road road1 = mapOfRoad.get(2 * roadUnIdPath.get(i));
+            Road road2 = mapOfRoad.get(2 * roadUnIdPath.get(i)+1);
+            if (road1!= null) {
+                if (road1.getStartCross().equals(cross)) {
+                    result.add(road1);
+                    cross=road1.getEndCross();
+                }
+                else if(road2.getStartCross().equals(cross)){
+                    result.add(road2);
+                    cross=road2.getEndCross();
+                }
+            }
+        }
+        if (!cross.equals(mapOfCross.get(car.getEndCrossId()))) {
+            logger.error("路径还原错误");
+            return null;
+        }
+        return result;
+    }
+
+    public ArrayList<Integer> getRoadIdPath(ArrayList<Road> roadPath) {
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i=0;i<roadPath.size();i++)
+            result.add(roadPath.get(i).getRoadId());
+        return result;
+    }
+
+    public boolean addCarIntoNet(Car car){
+        NetLocation nextLoc=car.getNextRoad().getEmptyLoc(car.getRunToNextRoadMaxLen());
+        if (nextLoc==null) {
+            return false;
+        }
+        return addCar(nextLoc,car);
+    }
+
 }
 

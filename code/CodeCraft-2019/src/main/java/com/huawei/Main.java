@@ -25,7 +25,9 @@ public class Main {
         // TODO:read input files
         logger.info("start reaWARN No appenders could be found for logger (com.huawei.Main).d input files");
         TrafficControlCenter trafficControlCenter=new TrafficControlCenter(carPath,roadPath,crossPath,answerPath);
-        trafficControlCenter.test();
+        //trafficControlCenter.test();
+        trafficControlCenter.initCarsWithAnswer();
+        trafficControlCenter.driveAllCars();
         // TODO: calc
 
         CarStatus status=CarStatus.WAIT;

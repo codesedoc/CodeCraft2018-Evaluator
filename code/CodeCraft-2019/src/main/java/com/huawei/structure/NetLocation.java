@@ -11,6 +11,10 @@ public class NetLocation {
         this.locInlan=locInlan;
     }
 
+    NetLocation(){
+
+    }
+
     public Road getRoad() {
         return road;
     }
@@ -34,4 +38,5 @@ public class NetLocation {
     public void setLocInlan(int locInlan) {
         this.locInlan = locInlan;
     }
+
 }

@@ -75,6 +75,8 @@ public class Car implements Comparable<Car>{
     private int runToNextRoadMaxLen;
 
     public Road getNextRoad() {
+        if (roadpathIndex==path.size())
+            return null;
         if (roadpathIndex+1<path.size())
             return path.get(roadpathIndex+1);
         return null;
@@ -185,10 +187,12 @@ public class Car implements Comparable<Car>{
                 "id=" + id +
                 ", startCrossId=" + startCrossId +
                 ", endCrossId=" + endCrossId +
-                ", maxSpeed=" + maxSpeed +
                 ", startTime=" + startTime +
                 ", planTime=" + planTime +
-                ", path=" + drivePath +
+                ", path=" + path +
+//                ", road=" +location.getRoad().getRoadId()/2+
+//                ", lan=" + location.getLanOrderNum() +
+//                ", locInlan=" + location.getLocInlan() +
                 '}';
     }
 
@@ -214,5 +218,10 @@ public class Car implements Comparable<Car>{
             return carId;
         }
         return time;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getId()==((Car)obj).getId();
     }
 }

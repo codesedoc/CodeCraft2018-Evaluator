@@ -65,6 +65,14 @@ public class Road implements Comparable<Road>{
         return result;
     }
 
+    public  ArrayList<Car> getAllCars(int  numOfLan){
+        ArrayList<Car> result=new ArrayList<>();
+        ArrayList<Car> temp=lans[numOfLan].getAllCars();
+        if (temp!=null)
+            result.addAll(temp);
+        return result;
+    }
+
     public int getInterve(int lanOrderNum,int currentLoc) {
         int intervel=lans[lanOrderNum].getIntervel(currentLoc);
         return intervel;
@@ -192,7 +200,13 @@ public class Road implements Comparable<Road>{
 
     @Override
     public boolean equals(Object obj) {
+        if (obj==null)
+            return false;
         return this.roadId==((Road)obj).getRoadId();
+    }
+    @Override
+    public String toString() {
+        return ""+roadId;
     }
 }
 
@@ -297,10 +311,11 @@ class LanOfroad{
 
 
     public boolean moveCarToHead(NetLocation netLocation,Car car){
-        for (int i=netLocation.getLocInlan();i<length;i++) {
+        for (int i=netLocation.getLocInlan()+1;i<length;i++) {
             if (carsInLan[i] != null)
                 return false;
         }
+        removeCar(netLocation,car);
         NetLocation newLoc=new NetLocation(netLocation.getRoad(),netLocation.getLanOrderNum(),length-1);
         carsInLan[length-1]=car;
         car.setLocation(newLoc);
@@ -316,13 +331,13 @@ class LanOfroad{
     }
 
     public int getIntervel(int location) {
-        int nextCarLoc=length;
-        for (int i=location;i<length;i++){
+        int i;
+        for (i=location+1;i<length;i++){
             if (carsInLan[i]!=null) {
-                nextCarLoc = i;
+                break;
             }
         }
-        return headIndex-nextCarLoc;
+        return i-1-location;
     }
     public Car getFirstCar(int index) {
         return carsInLan[headIndex-index];
@@ -346,5 +361,10 @@ class LanOfroad{
             return true;
         return false;
 
+    }
+
+    @Override
+    public String toString() {
+        return ""+roadId;
     }
 }

@@ -224,8 +224,15 @@ class Cross implements Comparable<Cross> {
 
     public void addFirstcar(Road road){
         Car car=road.getFistWaitCar();
-        if (car!=null && car.getNextRoad()!=null)
+        if (car!=null && car.getNextRoad()!=null) {
+//            if (car.getId()==19223 && this.crossId==20)
+//                car=car;
+            for (Car car2:firstCars) {
+                if (car2.getId()==car.getId())
+                    return;
+            }
             firstCars.add(car);
+        }
     }
     public void createFirstcars(){
         Iterator<Road> it=adjRoadInSet.iterator();
@@ -239,6 +246,8 @@ class Cross implements Comparable<Cross> {
     }
 
     public boolean isConflict(Car car1){
+        if (car1.getNextRoad()==null)
+            return false;
         int car1Id=car1.getId();
         for (Car car2:firstCars) {
             if (car2.getId()!=car1Id)

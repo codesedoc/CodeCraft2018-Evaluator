@@ -185,6 +185,10 @@ public class RoadNet {
         return road.getAllCars();
     }
 
+    public ArrayList<Car> getAllCarsInLan(Road road,int numOfLan){
+        return road.getAllCars(numOfLan);
+    }
+
     public TreeSet<Road> getRoadSet() {
         return roadSet;
     }
@@ -194,6 +198,8 @@ public class RoadNet {
     }
 
     public int getIntervel(NetLocation currentLoc) {
+        if (currentLoc==null)
+            currentLoc=currentLoc;
         return currentLoc.getRoad().getInterve(currentLoc.getLanOrderNum(),currentLoc.getLocInlan());
     }
     public boolean removeCar(NetLocation location,Car car){
@@ -214,6 +220,8 @@ public class RoadNet {
     }
 
     public boolean moveCar(NetLocation netLocation,Cross cross ,Car car){
+//        if (car.getId()==10200&& cross.getCrossId()==45)
+//            car=car;
         if (car.getNextRoad()==null) {
             netLocation.getRoad().removeCar(netLocation,car);
             removeCarFromCross(cross,car);

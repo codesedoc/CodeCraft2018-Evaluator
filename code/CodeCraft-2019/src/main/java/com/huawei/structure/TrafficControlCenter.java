@@ -3,6 +3,7 @@ package com.huawei.structure;
 import com.huawei.FileUtils;
 import org.apache.log4j.Logger;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,8 @@ public class TrafficControlCenter {
         //countOfCar=carsManager.getCountOfCar();
     }
 
-    private int systemTime;
+    private int systemTime=0;
+    private int allCarsRunTime=0;
     private void addCarIntoNet() {
         if (carsNoStart.size()==0)
             return;
@@ -63,9 +65,11 @@ public class TrafficControlCenter {
 
 
     private void removeCarFromNet(Car car) {
-        this.carsInNet.remove(car);
+        if (!this.carsInNet.remove(car))
+            car=car;
         countOfCarInNet--;
         countOfArriveCars++;
+        allCarsRunTime+=(systemTime-car.getPlanTime()+1);
     }
 
     public void initCarsWithAnswer(){
@@ -74,6 +78,8 @@ public class TrafficControlCenter {
         for (String carStr:carStrList){
             if (carStr.startsWith("#"))
                 continue;
+            if (carStr.equals(""))
+                continue;
             String[] carItems = carStr.substring(1,carStr.length()-1).split(",\\s*");
 
             Car car=carsManager.mapOfCar.get(Integer.parseInt(carItems[0]));
@@ -81,9 +87,13 @@ public class TrafficControlCenter {
             car.setStartTime(Integer.parseInt(carItems[1]));
             ArrayList<Integer> roadIdPath=new ArrayList<>();
 
-            for (int i=2;i<carItems.length;i++)
-                roadIdPath.add(Integer.parseInt(carItems[i]));
-
+            for (int i=2;i<carItems.length;i++) {
+                try {
+                    roadIdPath.add(Integer.parseInt(carItems[i]));
+                } catch (Exception e) {
+                    e = e;
+                }
+            }
             ArrayList<Road> roadPath=roadNet.getRoadPath(car,roadIdPath);
             car.setPath(roadPath);
             cars.add(car);
@@ -113,6 +123,8 @@ public class TrafficControlCenter {
 
     public void driveAllCars(){
         systemTime=0;
+        allCarsRunTime=0;
+        addCarIntoNet();
         while (countOfCarInNet>0 || countOfNoStartCars>0) {
             //recordScene();
             if (!driveAllCarInNet()) {
@@ -122,29 +134,35 @@ public class TrafficControlCenter {
                 return;
             }
             systemTime++;
+            addCarIntoNet();
+//            if (systemTime==318707)
+//                systemTime=systemTime;
         }
         logger.error("系统调度时间："+systemTime);
+        logger.error("所有车辆总调度时间："+allCarsRunTime);
         //outPut();
     }
 
     private int countOfWaitCars=0;
-    private ArrayList<Car> allfirstWaiteCars;
+    private ArrayList<Car> allfirstWaiteCars=new ArrayList<>();
 
     private boolean driveAllCarInNet(){
-        if (countOfCarInNet==0) {
-            addCarIntoNet();
-            return true;
-        }
         Iterator<Road> itRoad=roadNet.getRoadSet().iterator();
         countOfWaitCars=0;
+        for (int j=0;j<countOfCarInNet;j++)
+            carsInNet.get(j).setCarStatus(CarStatus.UNDEFINE);
+        if (countOfCarInNet!=carsInNet.size()) {
+            logger.error("运行错误");
+            return false;
+        }
         while(itRoad.hasNext()){
             Road road= itRoad.next();
             if (!tagCarsStatus(road))
                 return false;
         }
-        Iterator<Cross> itCross=roadNet.getCrossSet().iterator();
         while (countOfWaitCars>0){
             int preCount=countOfWaitCars;
+            Iterator<Cross> itCross=roadNet.getCrossSet().iterator();
             while (itCross.hasNext()) {
                 Cross cross = itCross.next();
                 cross.createFirstcars();
@@ -157,37 +175,46 @@ public class TrafficControlCenter {
                     if (firstCar != null) {
                         if (cross.isConflict(firstCar))
                             continue;
-                        if (roadNet.moveCar(firstCar.getLocation(), cross, firstCar)) {
-                            cross.addFirstcar(roadInCross);
-                            countOfWaitCars--;
+                        NetLocation carLoc=firstCar.getLocation();
+                        if (roadNet.moveCar(carLoc, cross, firstCar)) {
                             if (firstCar.getNextRoad()==null)
                                 removeCarFromNet(firstCar);
                             else
                                 firstCar.setCurMaxSpeed(Math.min(firstCar.getLocation().getRoad().getMaxSpeed(),firstCar.getMaxSpeed()));
                             firstCar.setCarStatus(CarStatus.END);
+                            tagCarsStatusInLan(carLoc.getRoad(),carLoc.getLanOrderNum());
+                            countOfWaitCars--;
+                            cross.addFirstcar(roadInCross);
                         }
                     }
                 }
             }
             if (preCount==countOfWaitCars){
-                allfirstWaiteCars.clear();
-                allfirstWaiteCars.addAll(roadNet.getAllFirstWaitCars());
+                //allfirstWaiteCars.clear();
+                //allfirstWaiteCars.addAll(roadNet.getAllFirstWaitCars());
+                for (int i=0;i<carsInNet.size();i++)
+                    System.out.println(carsInNet.get(i));
                 return false;
             }
         }
-        addCarIntoNet();
         return true;
     }
 
 
     private boolean tagFirstCar(Car car ){
-        if (car.getId()==18585)
+        if (car.getId()==17588)
             car=car;
         NetLocation location=car.getLocation();
         int intervel=roadNet.getIntervel(location);
         if (intervel>=car.getCurMaxSpeed()) {
-            car.setCarStatus(CarStatus.END);
-            return roadNet.moveCar(location,car,intervel);
+            if (car.getId()==13886)
+                car=car;
+            if (car.getCarStatus()!=CarStatus.END) {
+                if (car.getCarStatus()==CarStatus.WAIT)
+                    countOfWaitCars--;
+                car.setCarStatus(CarStatus.END);
+                return roadNet.moveCar(location, car, car.getCurMaxSpeed());
+            }
         }
         else{
             Road nextRoad= car.getNextRoad();
@@ -195,55 +222,106 @@ public class TrafficControlCenter {
             if (nextRoad!=null)
                 maxSpeed= Math.min(car.getNextRoad().getMaxSpeed(),car.getMaxSpeed());
             else{
-                car.setCarStatus(CarStatus.WAIT);
-                car.setRunToNextRoadMaxLen(0);
+                if (car.getCarStatus()!=CarStatus.END) {
+                    NetLocation location1=car.getLocation();
+                    if (car.getCarStatus()==CarStatus.WAIT)
+                        countOfWaitCars--;
+                    car.setCarStatus(CarStatus.END);
+                    roadNet.removeCar(location1,car);
+                    removeCarFromNet(car);
+                    tagCarsStatusInLan(location1.getRoad(),location1.getLanOrderNum());
+                }
                 return true;
             }
             if((maxSpeed-intervel)<=0){
-                car.setCarStatus(CarStatus.END);
-                return roadNet.moveCar(location,car,intervel);
+                if (car.getCarStatus()!=CarStatus.END) {
+                    if (car.getCarStatus()==CarStatus.WAIT)
+                        countOfWaitCars--;
+                    car.setCarStatus(CarStatus.END);
+                    return roadNet.moveCar(location, car, intervel);
+                }
             }
             else {
-                car.setCarStatus(CarStatus.WAIT);
-                car.setRunToNextRoadMaxLen(maxSpeed-intervel);
-                countOfWaitCars++;
+                if (car.getCarStatus()==CarStatus.UNDEFINE) {
+                    countOfWaitCars++;
+                    car.setCarStatus(CarStatus.WAIT);
+                    car.setRunToNextRoadMaxLen(maxSpeed-intervel);
+                }
             }
         }
         return true;
     }
     private boolean tagOtherCar(Car frontCar,Car curCar ){
+        if (curCar.getId()==17588)
+            curCar=curCar;
         NetLocation location=curCar.getLocation();
         int intervel=roadNet.getIntervel(location);
         if (intervel>=curCar.getCurMaxSpeed()) {
-            curCar.setCarStatus(CarStatus.END);
-            return  roadNet.moveCar(location,curCar,intervel);
+            if (curCar.getCarStatus()!=CarStatus.END) {
+                if (curCar.getCarStatus()==CarStatus.WAIT)
+                    countOfWaitCars--;
+                curCar.setCarStatus(CarStatus.END);
+                return roadNet.moveCar(location, curCar, intervel);
+            }
         }
         else{
             CarStatus carStatus= frontCar.getCarStatus();
-            curCar.setCarStatus(carStatus);
             if(carStatus==CarStatus.END){
-                return roadNet.moveCar(location,curCar,intervel);
+                if (curCar.getCarStatus()!=CarStatus.END) {
+                    if (curCar.getCarStatus()==CarStatus.WAIT)
+                        countOfWaitCars--;
+                    curCar.setCarStatus(CarStatus.END);
+                    return roadNet.moveCar(location, curCar, intervel);
+                }
             }
             else if (carStatus==CarStatus.WAIT){
-                countOfWaitCars++;
+                if (curCar.getCarStatus()==CarStatus.UNDEFINE) {
+                    countOfWaitCars++;
+                }
+                curCar.setCarStatus(carStatus);
             }
             else
                 return false;
+
         }
         return true;
     }
 
+    private boolean tagCarsStatusInLan(Road road,int numOfLan){
+        ArrayList<Car> carsInLan=roadNet.getAllCarsInLan(road,numOfLan);
+        int countOfCars=carsInLan.size();
+        if (countOfCars==0)
+            return true;
+        Car car=carsInLan.get(0);
+//        if (car.getId()==15495)
+//            car=car;
+        if (car.getLocation()==null)
+            return true;
+        if(!tagFirstCar(car))
+            return false;
+        Car preCar=car;
+        for (int i=1;i<countOfCars;i++,preCar=car) {
+            car=carsInLan.get(i);
+            if (!tagOtherCar(preCar,car))
+                return false;
+        }
+        return true;
+    }
     private boolean tagCarsStatus(Road road){
+        if (road.getRoadId()==10111)
+            road=road;
         ArrayList<ArrayList<Car>> carsIdInRoad=roadNet.getAllCarsInRoad(road);
         for (ArrayList<Car> carsInLan:carsIdInRoad) {
             int countOfCars=carsInLan.size();
             if (countOfCars==0)
                 continue;
             Car car=carsInLan.get(0);
-            if (car!=null)
+            if (car.getId()==19098 && systemTime==72)
                 car=car;
             if(!tagFirstCar(car))
                 return false;
+            if (car.getLocation()==null)
+                return true;
             Car preCar=car;
             for (int i=1;i<countOfCars;i++,preCar=car) {
                 car=carsInLan.get(i);

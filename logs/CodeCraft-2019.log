@@ -342,3 +342,91 @@
 00:58:57 main INFO com.huawei.Main.main(37) equals相等
 00:58:57 main INFO com.huawei.Main.main(39) Start write output file
 00:58:57 main INFO com.huawei.Main.main(41) End...
+12:29:44 main INFO com.huawei.Main.main(17) Start...
+12:29:44 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:29:44 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:31:08 main INFO com.huawei.Main.main(17) Start...
+12:31:08 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:31:08 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:32:43 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(141) 系统调度时间：318765
+12:32:43 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(142) 所有车辆总调度时间：1597287838
+12:32:43 main INFO com.huawei.Main.main(35) ==相等
+12:32:43 main INFO com.huawei.Main.main(37) equals相等
+12:32:43 main INFO com.huawei.Main.main(39) Start write output file
+12:32:43 main INFO com.huawei.Main.main(41) End...
+12:32:59 main INFO com.huawei.Main.main(17) Start...
+12:32:59 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:32:59 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:33:20 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(141) 系统调度时间：318765
+12:33:20 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(142) 所有车辆总调度时间：1597287838
+12:33:20 main INFO com.huawei.Main.main(35) ==相等
+12:33:20 main INFO com.huawei.Main.main(37) equals相等
+12:33:20 main INFO com.huawei.Main.main(39) Start write output file
+12:33:20 main INFO com.huawei.Main.main(41) End...
+12:34:19 main INFO com.huawei.Main.main(17) Start...
+12:34:19 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:34:19 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:34:20 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+12:34:20 main INFO com.huawei.Main.main(35) ==相等
+12:34:20 main INFO com.huawei.Main.main(37) equals相等
+12:34:20 main INFO com.huawei.Main.main(39) Start write output file
+12:34:20 main INFO com.huawei.Main.main(41) End...
+12:34:38 main INFO com.huawei.Main.main(17) Start...
+12:34:38 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:34:38 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:39:20 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+12:39:20 main INFO com.huawei.Main.main(35) ==相等
+12:39:20 main INFO com.huawei.Main.main(37) equals相等
+12:39:20 main INFO com.huawei.Main.main(39) Start write output file
+12:39:20 main INFO com.huawei.Main.main(41) End...
+12:39:31 main INFO com.huawei.Main.main(17) Start...
+12:39:31 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:39:31 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:40:40 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+12:40:40 main INFO com.huawei.Main.main(35) ==相等
+12:40:40 main INFO com.huawei.Main.main(37) equals相等
+12:40:40 main INFO com.huawei.Main.main(39) Start write output file
+12:40:40 main INFO com.huawei.Main.main(41) End...
+12:40:52 main INFO com.huawei.Main.main(17) Start...
+12:40:52 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:40:52 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:42:14 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+12:42:14 main INFO com.huawei.Main.main(35) ==相等
+12:42:14 main INFO com.huawei.Main.main(37) equals相等
+12:42:14 main INFO com.huawei.Main.main(39) Start write output file
+12:42:14 main INFO com.huawei.Main.main(41) End...
+12:42:24 main INFO com.huawei.Main.main(17) Start...
+12:42:24 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:42:24 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+12:46:09 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+12:46:09 main INFO com.huawei.Main.main(35) ==相等
+12:46:09 main INFO com.huawei.Main.main(37) equals相等
+12:46:09 main INFO com.huawei.Main.main(39) Start write output file
+12:46:09 main INFO com.huawei.Main.main(41) End...
+12:46:21 main INFO com.huawei.Main.main(17) Start...
+12:46:21 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+12:46:21 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+13:04:12 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+13:04:12 main INFO com.huawei.Main.main(35) ==相等
+13:04:12 main INFO com.huawei.Main.main(37) equals相等
+13:04:12 main INFO com.huawei.Main.main(39) Start write output file
+13:04:12 main INFO com.huawei.Main.main(41) End...
+13:04:24 main INFO com.huawei.Main.main(17) Start...
+13:04:24 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+13:04:24 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+13:04:45 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+13:04:45 main INFO com.huawei.Main.main(35) ==相等
+13:04:45 main INFO com.huawei.Main.main(37) equals相等
+13:04:45 main INFO com.huawei.Main.main(39) Start write output file
+13:04:45 main INFO com.huawei.Main.main(41) End...
+13:04:55 main INFO com.huawei.Main.main(17) Start...
+13:04:55 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+13:04:55 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files
+13:11:06 main ERROR com.huawei.structure.TrafficControlCenter.driveAllCars(133) 死锁
+13:11:06 main INFO com.huawei.Main.main(35) ==相等
+13:11:06 main INFO com.huawei.Main.main(37) equals相等
+13:11:06 main INFO com.huawei.Main.main(39) Start write output file
+13:11:06 main INFO com.huawei.Main.main(41) End...
+13:11:18 main INFO com.huawei.Main.main(17) Start...
+13:11:18 main INFO com.huawei.Main.main(23) carPath = /HDU_XuSheng/SDK_java/bin/config/car.txt roadPath = /HDU_XuSheng/SDK_java/bin/config/road.txt crossPath = /HDU_XuSheng/SDK_java/bin/config/cross.txt and answerPath = /HDU_XuSheng/SDK_java/bin/config/answer.txt
+13:11:18 main INFO com.huawei.Main.main(26) start reaWARN No appenders could be found for logger (com.huawei.Main).d input files

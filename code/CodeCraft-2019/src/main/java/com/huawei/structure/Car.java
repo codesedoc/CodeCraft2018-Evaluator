@@ -102,7 +102,7 @@ public class Car implements Comparable<Car>{
         this.planTime = planTime;
         drivePath=new ArrayList<>();
         location=null;
-        carStatus=CarStatus.UNDEFINE;
+        carStatus=CarStatus.UNTAG;
         curMaxSpeed=maxSpeed;
     }
 
@@ -211,7 +211,7 @@ public class Car implements Comparable<Car>{
     public int compareTo(Car o) {
         int time= this.startTime-o.getStartTime();
         if (time==0){
-            int carId=o.id-this.id;
+            int carId=this.id-o.getId();
             if (carId==0)
                 return -1;
 

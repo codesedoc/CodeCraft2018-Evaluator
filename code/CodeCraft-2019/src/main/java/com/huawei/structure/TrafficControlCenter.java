@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import static com.huawei.structure.CarStatus.*;
+
 public class TrafficControlCenter {
     private static  TrafficControlCenter SingleInstance=null;
     private String carFile;
@@ -44,23 +46,25 @@ public class TrafficControlCenter {
     private void addCarIntoNet() {
         if (carsNoStart.size()==0)
             return;
-        Car car=this.carsNoStart.get(0);
-        if (car.getStartTime()>systemTime)
-            return;
-        int max=Math.min(car.getMaxSpeed(),car.getNextRoad().getMaxSpeed());
-        car.setRunToNextRoadMaxLen(max);
-        car.setCurMaxSpeed(max);
-        if (roadNet.addCarIntoNet(car)) {
-            car.toNextRoad();
-            car.setCarStatus(CarStatus.END);
-        }
-        else
-            return;
-        this.carsInNet.add(car);
-        this.carsNoStart.remove(0);
+        Car car;
+        int i;
+        for (i=0;i<countOfNoStartCars;i++) {
+            car=this.carsNoStart.get(i);
+            if(car.getStartTime()>systemTime)
+                break;
+            int maxLen = Math.min(car.getMaxSpeed(), car.getNextRoad().getMaxSpeed());
+            car.setRunToNextRoadMaxLen(maxLen);
+            if (roadNet.addCarIntoNet(car)) {
+                car.toNextRoad();
+                car.setCarStatus(END);
+            } else
+                continue;
+            this.carsInNet.add(car);
+            this.carsNoStart.remove(i);
 
-        countOfNoStartCars--;
-        countOfCarInNet++;
+            countOfNoStartCars--;
+            countOfCarInNet++;
+        }
     }
 
 
@@ -134,6 +138,8 @@ public class TrafficControlCenter {
                 return;
             }
             systemTime++;
+            if (systemTime==667)
+                systemTime=systemTime;
             addCarIntoNet();
 //            if (systemTime==318707)
 //                systemTime=systemTime;
@@ -150,7 +156,7 @@ public class TrafficControlCenter {
         Iterator<Road> itRoad=roadNet.getRoadSet().iterator();
         countOfWaitCars=0;
         for (int j=0;j<countOfCarInNet;j++)
-            carsInNet.get(j).setCarStatus(CarStatus.UNDEFINE);
+            carsInNet.get(j).setCarStatus(UNTAG);
         if (countOfCarInNet!=carsInNet.size()) {
             logger.error("运行错误");
             return false;
@@ -160,27 +166,38 @@ public class TrafficControlCenter {
             if (!tagCarsStatus(road))
                 return false;
         }
+        for (int j=0;j<countOfCarInNet;j++) {
+            Car car=carsInNet.get(j);
+            if (car.getCarStatus() == CarStatus.UNTAG)
+                countOfCarInNet = countOfCarInNet;
+        }
         while (countOfWaitCars>0){
             int preCount=countOfWaitCars;
             Iterator<Cross> itCross=roadNet.getCrossSet().iterator();
             while (itCross.hasNext()) {
                 Cross cross = itCross.next();
                 cross.createFirstcars();
-
+//                if(cross.getCrossId()==30)
+//                    cross=cross;
                 Iterator<Road> it;
                 it = cross.getAdjRoadInSet().iterator();
                 while (it.hasNext()) {
                     Road roadInCross = it.next();
                     Car firstCar = roadInCross.getFistWaitCar();
                     if (firstCar != null) {
-                        if (firstCar.getId()==11846 && roadInCross.getRoadId()==10084)
-                            firstCar=firstCar;
+//                        if (firstCar.getId()==11846 && roadInCross.getRoadId()==10084)
+//                            firstCar=firstCar;
                         if (cross.isConflict(firstCar))
                             continue;
                         NetLocation carLoc=firstCar.getLocation();
+//                        if (firstCar.getId()==13161 && carLoc.getRoad().getRoadId()==10078)
+//                            firstCar=firstCar;
+//                        if (firstCar.getId()==16803 && carLoc.getRoad().getRoadId()==10078)
+//                            firstCar=firstCar;
                         if (roadNet.moveCar(carLoc, cross, firstCar)) {
+
                             firstCar.setCurMaxSpeed(Math.min(firstCar.getLocation().getRoad().getMaxSpeed(),firstCar.getMaxSpeed()));
-                            firstCar.setCarStatus(CarStatus.END);
+                            firstCar.setCarStatus(END);
                             tagCarsStatus(carLoc.getRoad(),carLoc.getLanOrderNum());
                             cross.addFirstcar(roadInCross);
                             countOfWaitCars--;
@@ -191,107 +208,142 @@ public class TrafficControlCenter {
             if (preCount==countOfWaitCars){
                 //allfirstWaiteCars.clear();
                 //allfirstWaiteCars.addAll(roadNet.getAllFirstWaitCars());
+                for (int j=0;j<countOfCarInNet;j++) {
+                    Car car=carsInNet.get(j);
+                    if (car.getCarStatus() != END)
+                        countOfCarInNet = countOfCarInNet;
+                }
                 for (int i=0;i<carsInNet.size();i++)
                     System.out.println(carsInNet.get(i));
                 return false;
             }
         }
+
         return true;
     }
 
 
     private boolean tagFirstCar(Car car ){
-        if (car.getId()==11846)
-            car=car;
-        NetLocation location=car.getLocation();
-        int intervel=roadNet.getIntervel(location);
-        if (intervel>=car.getCurMaxSpeed()) {
-            if (car.getId()==13886)
-                car=car;
-            if (car.getCarStatus()!=CarStatus.END) {
-                if (car.getCarStatus()==CarStatus.WAIT)
+        boolean result;
+//        if (car.getId()==11846)
+//            car=car;
+        if (car.getCarStatus()== END)//车已经调度过
+            result=true;
+        else {//车没有调度过
+            NetLocation location = car.getLocation();
+            int intervel = roadNet.getIntervel(location);
+            if (car.getNextRoad() == null) {//可以入库
+                if (car.getCarStatus() == WAIT) {//之前标记的是等待，则入库并更新countOfWaitCars
                     countOfWaitCars--;
-                car.setCarStatus(CarStatus.END);
-                return roadNet.moveCar(location, car, car.getCurMaxSpeed());
-            }
-            else
-                return true;
-        }
-        else{
-            Road nextRoad= car.getNextRoad();
-            int maxSpeed;
-            if (nextRoad!=null)
-                maxSpeed= Math.min(car.getNextRoad().getMaxSpeed(),car.getMaxSpeed());
-            else{
-                if (car.getCarStatus()!=CarStatus.END) {
-                    if (car.getCarStatus()==CarStatus.WAIT)
-                        countOfWaitCars--;
-                    car.setCarStatus(CarStatus.END);
-                    if (roadNet.removeCar(location,car)){
+                    car.setCarStatus(END);
+                    if (result = roadNet.removeCar(location, car)) {
                         removeCarFromNet(car);
-                        return true;
                     }
-                    else
-                        return false;
+                } else if (car.getCarStatus() == UNTAG) {//之前没有标记过，则直接入库
+                    car.setCarStatus(END);
+                    if (result = roadNet.removeCar(location, car)) {
+                        removeCarFromNet(car);
+                    }
+                } else {
+                    result = false;
 
                 }
-                else
-                    return true;
             }
-            if((maxSpeed-intervel)<=0){
-                if (car.getCarStatus()!=CarStatus.END) {
-                    if (car.getCarStatus()==CarStatus.WAIT)
+            else {//不能入库
+                int nextMaxSpeed = Math.min(car.getNextRoad().getMaxSpeed(), car.getMaxSpeed());
+                if (car.getCarStatus() == WAIT) {
+                    if (intervel >= car.getCurMaxSpeed()) {//不能到路边
                         countOfWaitCars--;
-                    car.setCarStatus(CarStatus.END);
-                    return roadNet.moveCar(location, car, intervel);
+                        car.setCarStatus(END);
+                        result = roadNet.moveCar(location, car, car.getCurMaxSpeed());
+                    } else {//可以到路边
+                        if ((nextMaxSpeed - intervel) <= 0) {//不可以过路口
+                            countOfWaitCars--;
+                            car.setCarStatus(END);
+                            result = roadNet.moveCar(location, car, intervel);
+                        } else {//可以过路口，继续等待,并刷新nextMaxlen
+                            car.setRunToNextRoadMaxLen(nextMaxSpeed - intervel);
+                            result = true;
+                        }
+                    }
+                } else if (car.getCarStatus() == UNTAG) {
+                    if (intervel >= car.getCurMaxSpeed()) {//不能到路边
+                        car.setCarStatus(END);
+                        result = roadNet.moveCar(location, car, car.getCurMaxSpeed());
+                    } else {//可以到路边
+                        if ((nextMaxSpeed - intervel) <= 0) {//不可以过路口
+                            car.setCarStatus(END);
+                            result = roadNet.moveCar(location, car, intervel);
+                        } else {//可以过路口，等待,并刷新nextMaxlen
+                            car.setCarStatus(WAIT);
+                            countOfWaitCars++;
+                            car.setRunToNextRoadMaxLen(nextMaxSpeed - intervel);
+                            result = true;
+                        }
+                    }
+                } else {
+                    result = false;
+
                 }
-            }
-            else {
-                if (car.getCarStatus()==CarStatus.UNDEFINE) {
-                    countOfWaitCars++;
-                    car.setCarStatus(CarStatus.WAIT);
-                    car.setRunToNextRoadMaxLen(maxSpeed-intervel);
-                }
-                else if (car.getCarStatus()==CarStatus.WAIT)
-                    car.setRunToNextRoadMaxLen(maxSpeed-intervel);
             }
         }
-        return true;
+        return result;
     }
     private boolean tagOtherCar(Car frontCar,Car curCar ){
-        if (curCar.getId()==11846)
-            curCar=curCar;
-        NetLocation location=curCar.getLocation();
-        int intervel=roadNet.getIntervel(location);
-        if (intervel>=curCar.getCurMaxSpeed()) {
-            if (curCar.getCarStatus()!=CarStatus.END) {
-                if (curCar.getCarStatus()==CarStatus.WAIT)
+        boolean result;
+//        if (curCar.getId()==16803 && curCar.getLocation().getRoad().getRoadId()==10078)
+//            curCar=curCar;
+        if (curCar.getCarStatus()== END)//车已经调度过
+            result=true;
+        else {//车没有调度过
+            NetLocation location=curCar.getLocation();
+            int intervel=roadNet.getIntervel(location);
+            if (intervel>=curCar.getCurMaxSpeed()) {//没车阻挡
+                if (curCar.getCarStatus() == WAIT) {//之前是等待状态（现在前车调度了，腾出了空间），则调度，并更新countOfWaitCars
                     countOfWaitCars--;
-                curCar.setCarStatus(CarStatus.END);
-                return roadNet.moveCar(location, curCar, intervel);
+                    curCar.setCarStatus(END);
+                    result = roadNet.moveCar(location, curCar, intervel);
+                }
+                else if (curCar.getCarStatus() == UNTAG) {//没有标记过，则直接调度
+                    curCar.setCarStatus(END);
+                    result = roadNet.moveCar(location, curCar, intervel);
+                }
+                else {
+                    result = false;
+                }
             }
-        }
-        else{
-            CarStatus carStatus= frontCar.getCarStatus();
-            if(carStatus==CarStatus.END){
-                if (curCar.getCarStatus()!=CarStatus.END) {
-                    if (curCar.getCarStatus()==CarStatus.WAIT)
+            else {//有车阻挡
+                CarStatus frontCarCarStatus = frontCar.getCarStatus();
+                if (frontCarCarStatus == END) {
+                    if (curCar.getCarStatus() == WAIT) {//之前是等待，则调度，并更新countOfWaitCars
                         countOfWaitCars--;
-                    curCar.setCarStatus(CarStatus.END);
-                    return roadNet.moveCar(location, curCar, intervel);
+                        curCar.setCarStatus(END);
+                        result = roadNet.moveCar(location, curCar, intervel);
+                    } else if (curCar.getCarStatus() == UNTAG) {//没有被标记过则直接调度
+                        curCar.setCarStatus(END);
+                        result = roadNet.moveCar(location, curCar, intervel);
+                    } else {
+                        result = false;
+                    }
                 }
-            }
-            else if (carStatus==CarStatus.WAIT){
-                if (curCar.getCarStatus()==CarStatus.UNDEFINE) {
-                    countOfWaitCars++;
+                else if(frontCarCarStatus == WAIT){
+                    if (curCar.getCarStatus()==WAIT){//已经是等待，则保持
+                            result=true;
+                        }
+                    else if(curCar.getCarStatus()==UNTAG)  {//没有被标记过则标记等待，并累计countOfWaitCars
+                            countOfWaitCars++;
+                            curCar.setCarStatus(WAIT);
+                            result = true;
+                        }
+                    else{
+                            result = false;
+                    }
                 }
-                curCar.setCarStatus(carStatus);
+                else
+                    result=false;
             }
-            else
-                return false;
-
         }
-        return true;
+        return result;
     }
 
     private boolean tagCarsStatus(Road road,int numOfLan){

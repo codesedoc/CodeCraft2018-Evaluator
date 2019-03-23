@@ -96,6 +96,7 @@ public class Road implements Comparable<Road>{
         for (i=0;i<countOfLane;i++) {
             result= lans[i].getEmptyLoc(intervel);
             if (result!=null){
+                result.setLanOrderNum(i);
                 result.setRoad(this);
                 return result;
             }
@@ -136,12 +137,22 @@ public class Road implements Comparable<Road>{
     }
 
     public boolean addCar(NetLocation netLocation,Car car){
+        if (getRoadId()==10130&&netLocation.getLanOrderNum()==0 &&netLocation.getLocInlan()==1)
+            if(car.getId()==13185)
+                car=car;
+            else
+                car=car;
         int lanOrderNum=netLocation.getLanOrderNum();
         if (lanOrderNum<0 ||lanOrderNum>= countOfLane ) {
             logger.error("number of lan too max");
             return false;
         }
-        return (lans[netLocation.getLanOrderNum()].addCar(netLocation,car));
+        if (lans[netLocation.getLanOrderNum()].addCar(netLocation,car)){
+            car.setCurMaxSpeed(Math.min(car.getMaxSpeed(),maxSpeed));
+            return true;
+        }
+        else
+            return  false;
     }
 
 
@@ -280,6 +291,8 @@ class LanOfroad{
         int  location=netLocation.getLocInlan();
         if (location<0 ||location>=length)
             return false;
+        if ( carsInLan[location]!=null)
+            car=car;
         this.carsInLan[location] = car;
         car.setLocation(netLocation);
         return true;
@@ -289,6 +302,7 @@ class LanOfroad{
         int pos=netLocation.getLocInlan();
         if (pos<0 ||pos>=length)
             return false;
+
         carsInLan[pos]=null;
         car.setLocation(null);
         return true;

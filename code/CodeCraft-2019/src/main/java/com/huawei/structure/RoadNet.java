@@ -220,8 +220,10 @@ public class RoadNet {
     }
 
     public boolean moveCar(NetLocation netLocation,Cross cross ,Car car){
-//        if (car.getId()==10200&& cross.getCrossId()==45)
-//            car=car;
+        if (car.getId()==13158&& netLocation.getRoad().getRoadId()==10102 && netLocation.getLanOrderNum()==0 && netLocation.getLocInlan()==13)
+            car=car;
+        if (car.getId()==16803 && netLocation.getRoad().getRoadId()==10078)
+            car=car;
         if (car.getNextRoad()==null) {
             netLocation.getRoad().removeCar(netLocation,car);
             removeCarFromCross(cross,car);
@@ -236,6 +238,7 @@ public class RoadNet {
                 return netLocation.getRoad().moveCarToHead(netLocation,car);
             }
         }
+
         if(netLocation.getRoad().removeCar(netLocation,car)) {
             if (removeCarFromCross(cross, car))
                 if (nextLoc.getRoad().addCar(nextLoc, car)){
